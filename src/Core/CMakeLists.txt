@@ -5,6 +5,7 @@ add_library(Core STATIC
 target_link_libraries(Core
   PUBLIC 
     Utils
+    Map
 )
 
 target_include_directories(Core
