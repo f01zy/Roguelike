@@ -1,6 +1,7 @@
 #include "Utils.h"
 #include <chrono>
 #include <cmath>
+#include <cstdlib>
 #include <random>
 #include <thread>
 
@@ -22,4 +23,9 @@ int Utils::random(int min, int max) {
 int Utils::roundToSquare(int rooms) {
   int root = std::ceil(std::sqrt(rooms));
   return root * root;
+}
+
+void Utils::clear() {
+  // ...
+  system("clear");
 }

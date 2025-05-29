@@ -4,7 +4,8 @@
 
 class Map final {
 public:
-  std::vector<std::vector<char>> map;
+  static std::vector<std::vector<char>> map;
+  static std::vector<bool> createdBlocksMap;
 
   Map();
   void generate();
@@ -15,12 +16,12 @@ private:
   int gridSize = 0;
   int countSymbolsInLine = 0;
 
-  int minRooms = 6;
-  int maxRooms = 10;
+  int minBlocks = 6;
+  int maxBlocks = 6;
   int blockSide = 10;
   int corridorWidth = 6;
   int corridorLength = 10;
 
-  void block(int);
-  void initMap();
+  bool block(int);
+  void initMaps();
 };

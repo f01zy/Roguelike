@@ -13,12 +13,18 @@ void Core::start() {
 
   while (1) {
     render();
-    utils.sleep(0.1);
+    utils.sleep(1);
+    utils.clear();
   }
 }
 
 void Core::render() {
   Map map;
 
-  std::cout << map.map.size() << std::endl;
+  for (int i = 0; i < Map::map.size(); i++) {
+    for (int j = 0; j < Map::map[i].size(); j++) {
+      std::cout << Map::map[i][j];
+    }
+    std::cout << std::endl;
+  }
 }
