@@ -1,5 +1,6 @@
 add_library(Core STATIC
   Core.cpp
+  Screen.cpp
 )
 
 target_link_libraries(Core

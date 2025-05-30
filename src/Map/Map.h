@@ -16,8 +16,8 @@ private:
   int gridSize{};
   std::vector<std::vector<bool>> createdBlocksMap;
 
-  int minBlocks = 4;
-  int maxBlocks = 10;
+  int minBlocks = 6;
+  int maxBlocks = 16;
   int blockSide = 10;
 
   bool block(int);

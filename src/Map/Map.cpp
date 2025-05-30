@@ -6,7 +6,6 @@
 #include "Map.h"
 #include "../Utils/Utils.h"
 #include <cmath>
-#include <iostream>
 #include <vector>
 
 Map::Map() {}
@@ -57,14 +56,6 @@ void Map::generate() {
   }
 
   makeDoors();
-
-  std::cout << "Created blocks:\n";
-  for (int i = 0; i < gridSize; i++) {
-    for (int j = 0; j < gridSize; j++) {
-      std::cout << (createdBlocksMap[i][j] ? '1' : '0');
-    }
-    std::cout << '\n';
-  }
 }
 
 bool Map::block(int position) {
