@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class Utils final {
 public:
   Utils();

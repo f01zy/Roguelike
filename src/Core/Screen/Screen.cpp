@@ -1,20 +1,29 @@
 #include "Screen.h"
+#include "../../Utils/Utils.h"
+#include "../Keyboard/Keyboard.h"
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+const char *vertexShaderSource =
+    "#version 330 core\n"
+    "layout (location = 0) in vec3 position;\n"
+    "void main()\n"
+    "{\n"
+    "gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
+    "}\0";
+
 Screen::Screen() {}
 
-void keyCallback(GLFWwindow *window, int key, int scancode, int action,
-                 int mode) {}
-
 void Screen::init() {
+  Utils utils;
+
   glfwInit();
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+  glfwWindowHint(GLFW_RESIZABLE, false);
 
   window = glfwCreateWindow(800, 600, "Roguelike", nullptr, nullptr);
   if (window == nullptr) {
@@ -34,7 +43,21 @@ void Screen::init() {
   glfwGetFramebufferSize(window, &width, &height);
   glViewport(0, 0, width, height);
 
-  glfwSetKeyCallback(window, keyCallback);
+  glfwSetKeyCallback(window, Keyboard::callback);
+
+  int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+  glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
+  glCompileShader(vertexShader);
+
+  const int bufferSize = 512;
+  int success;
+  char infoLog[bufferSize];
+  glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+
+  if (!success) {
+    glGetShaderInfoLog(vertexShader, bufferSize, nullptr, infoLog);
+    std::cout << "Vertex shader compilation error: " << infoLog << std::endl;
+  }
 }
 
 void Screen::render() {

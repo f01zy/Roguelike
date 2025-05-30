@@ -1,6 +1,7 @@
 add_library(Core STATIC
   Core.cpp
-  Screen.cpp
+  ./Screen/Screen.cpp
+  ./Keyboard/Keyboard.cpp
 )
 
 target_link_libraries(Core

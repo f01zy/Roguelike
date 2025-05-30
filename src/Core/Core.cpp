@@ -1,7 +1,7 @@
 #include "Core.h"
 #include "../Map/Map.h"
 #include "../Utils/Utils.h"
-#include "Screen.h"
+#include "./Screen/Screen.h"
 
 Core::Core() {}
 
