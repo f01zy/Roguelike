@@ -14,5 +14,7 @@ public:
   void render();
 
 private:
+  int shaderProgram;
+  unsigned VAO, VBO;
   GLFWwindow *window;
 };
