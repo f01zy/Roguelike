@@ -9,18 +9,16 @@ void Core::start() {
   Utils utils;
   Map map;
 
+  utils.clear();
   map.generate();
 
   while (1) {
     render();
-    utils.sleep(1);
-    utils.clear();
+    utils.sleep(10);
   }
 }
 
 void Core::render() {
-  Map map;
-
   for (int i = 0; i < Map::map.size(); i++) {
     for (int j = 0; j < Map::map[i].size(); j++) {
       std::cout << Map::map[i][j];
