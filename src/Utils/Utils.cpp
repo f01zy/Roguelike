@@ -30,3 +30,8 @@ void Utils::clear() {
   // ...
   system("clear");
 }
+
+std::string Utils::readFile(std::string path) {
+  std::ifstream file(path);
+  return {std::istreambuf_iterator<char>(file), {}};
+}

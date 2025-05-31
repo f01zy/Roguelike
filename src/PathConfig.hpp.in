@@ -1,0 +1,7 @@
+#pragma once
+
+#include <string>
+
+namespace Paths {
+const std::string SRC = "@CMAKE_SOURCE_DIR@/src";
+}

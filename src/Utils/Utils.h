@@ -9,4 +9,5 @@ public:
   int random(int, int);
   int roundToSquare(int);
   void clear();
+  std::string readFile(std::string path);
 };

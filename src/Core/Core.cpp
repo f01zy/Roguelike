@@ -1,17 +1,17 @@
 #include "Core.h"
 #include "../Map/Map.h"
 #include "../Utils/Utils.h"
-#include "./Screen/Screen.h"
+#include "Window/Window.h"
 
 Core::Core() {}
 
 void Core::start() {
   Utils utils;
   Map map;
-  Screen screen;
+  Window window;
 
   map.generate();
 
-  screen.init();
-  screen.render();
+  window.init();
+  window.render();
 }

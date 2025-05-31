@@ -1,7 +1,8 @@
 add_library(Core STATIC
   Core.cpp
-  ./Screen/Screen.cpp
+  ./Window/Window.cpp
   ./Keyboard/Keyboard.cpp
+  ./Figures/Triangle/Triangle.cpp
 )
 
 target_link_libraries(Core
