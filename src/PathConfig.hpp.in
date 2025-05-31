@@ -3,5 +3,5 @@
 #include <string>
 
 namespace Paths {
-const std::string SRC = "@CMAKE_SOURCE_DIR@/src";
+const std::string PROJECT = "@CMAKE_SOURCE_DIR@";
 }

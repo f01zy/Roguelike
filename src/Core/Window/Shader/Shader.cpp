@@ -21,7 +21,7 @@ Shader::Shader(int program, int type) : program(program) {
   }
 
   std::string stringSource = utils.readFile(
-      Paths::SRC + "/Core/Window/Shader/shaders/" + name + ".glsl");
+      Paths::PROJECT + "/src/Core/Window/Shader/shaders/" + name + ".glsl");
   const char *source = stringSource.c_str();
 
   int shader = glCreateShader(type);

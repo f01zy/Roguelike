@@ -15,7 +15,7 @@ void Triangle::render() {
   glBindVertexArray(VAO);
 
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(verticles), verticles, GL_DYNAMIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(verticles), verticles, GL_STATIC_DRAW);
 
   glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 6, (void *)0);
   glEnableVertexAttribArray(0);

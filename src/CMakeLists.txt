@@ -14,4 +14,5 @@ target_link_libraries(main
     OpenGL::GL
     GLEW
     glfw
+    ${CMAKE_SOURCE_DIR}/lib/libSOIL.a
 )

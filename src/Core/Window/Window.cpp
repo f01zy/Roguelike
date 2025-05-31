@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "../../PathConfig.hpp"
 #include "../Keyboard/Keyboard.h"
 #include "Figures/Rectangle/Rectangle.h"
 #include "Shader/Shader.h"
@@ -43,20 +44,27 @@ void Window::render() {
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
 
-    glClearColor(0.2, 0.2, 0.2, 0.2);
+    glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(program);
 
-    float first[24]{-0.8f, 1.0f, 0.0f,  1.0f, 0.0f,  0.0f, -0.8f, 0.8f,
-                    0.0f,  0.0f, 1.0f,  0.0f, -1.0f, 0.8f, 0.0f,  0.0f,
-                    0.0f,  1.0f, -1.0f, 1.0f, 0.0f,  0.0f, 0.0f,  0.0f};
-    float second[24]{-0.8f, -0.8f, 0.0f,  0.0f,  0.0f,  0.0f,  -0.8f, -1.0f,
-                     0.0f,  0.0f,  0.0f,  0.0f,  -1.0f, -1.0f, 0.0f,  0.0f,
-                     0.0f,  0.0f,  -1.0f, -0.8f, 0.0f,  0.0f,  0.0f,  0.0f};
+    float vertices[64] = {
+        0.7f,  0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, //
+        0.7f,  -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, //
+        0.1f,  -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, //
+        0.1f,  0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, //
 
-    Rectangle(first, VBO).render();
-    Rectangle(second, VBO).render();
+        -0.7f, 0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, //
+        -0.7f, -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, //
+        -0.1f, -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, //
+        -0.1f, 0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  //
+    };
+
+    Rectangle(&vertices[0], VBO, Paths::PROJECT + "/textures/floor.jpg")
+        .render();
+    Rectangle(&vertices[32], VBO, Paths::PROJECT + "/textures/container.jpg")
+        .render();
 
     glfwSwapBuffers(window);
   }
