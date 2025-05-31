@@ -15,10 +15,7 @@ public:
   void render();
 
 private:
-  int shaderProgram;
+  int program;
   unsigned VBO;
   GLFWwindow *window;
-
-  void initShaders();
-  void loadShader(int, std::string);
 };

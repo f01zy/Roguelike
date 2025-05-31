@@ -1,45 +1,10 @@
 #include "Window.h"
-#include "../../PathConfig.hpp"
-#include "../../Utils/Utils.h"
 #include "../Keyboard/Keyboard.h"
 #include "Figures/Rectangle/Rectangle.h"
+#include "Shader/Shader.h"
 #include <iostream>
 
 Window::Window() {}
-
-void Window::initShaders() {
-  int success;
-
-  shaderProgram = glCreateProgram();
-
-  loadShader(GL_VERTEX_SHADER, "vertex.glsl");
-  loadShader(GL_FRAGMENT_SHADER, "fragment.glsl");
-
-  glLinkProgram(shaderProgram);
-  glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-  if (!success)
-    std::cout << "Shader program link error" << std::endl;
-}
-
-void Window::loadShader(int type, std::string name) {
-  Utils utils;
-
-  int success;
-  std::string stringSource =
-      utils.readFile(Paths::SRC + "/Core/Window/shaders/" + name);
-  const char *source = stringSource.c_str();
-
-  int shader = glCreateShader(type);
-  glShaderSource(shader, 1, &source, nullptr);
-  glCompileShader(shader);
-
-  glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-  if (!success)
-    std::cout << "Shader compilation error" << std::endl;
-
-  glAttachShader(shaderProgram, shader);
-  glDeleteShader(shader);
-}
 
 void Window::init() {
   glfwInit();
@@ -67,7 +32,9 @@ void Window::init() {
   glViewport(0, 0, width, height);
   glfwSetKeyCallback(window, Keyboard::callback);
 
-  initShaders();
+  program = glCreateProgram();
+  Shader(program, GL_VERTEX_SHADER).use();
+  Shader(program, GL_FRAGMENT_SHADER).use();
 
   glGenBuffers(1, &VBO);
 }
@@ -79,16 +46,16 @@ void Window::render() {
     glClearColor(0.2, 0.2, 0.2, 0.2);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(shaderProgram);
+    glUseProgram(program);
 
     float first[24]{-0.8f, 1.0f, 0.0f,  1.0f, 0.0f,  0.0f, -0.8f, 0.8f,
                     0.0f,  0.0f, 1.0f,  0.0f, -1.0f, 0.8f, 0.0f,  0.0f,
                     0.0f,  1.0f, -1.0f, 1.0f, 0.0f,  0.0f, 0.0f,  0.0f};
-    Rectangle(first, VBO).render();
-
     float second[24]{-0.8f, -0.8f, 0.0f,  0.0f,  0.0f,  0.0f,  -0.8f, -1.0f,
                      0.0f,  0.0f,  0.0f,  0.0f,  -1.0f, -1.0f, 0.0f,  0.0f,
                      0.0f,  0.0f,  -1.0f, -0.8f, 0.0f,  0.0f,  0.0f,  0.0f};
+
+    Rectangle(first, VBO).render();
     Rectangle(second, VBO).render();
 
     glfwSwapBuffers(window);
