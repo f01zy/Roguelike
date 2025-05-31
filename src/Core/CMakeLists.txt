@@ -1,8 +1,9 @@
 add_library(Core STATIC
   Core.cpp
   ./Window/Window.cpp
+  ./Window/Figures/Triangle/Triangle.cpp
+  ./Window/Figures/Rectangle/Rectangle.cpp
   ./Keyboard/Keyboard.cpp
-  ./Figures/Triangle/Triangle.cpp
 )
 
 target_link_libraries(Core

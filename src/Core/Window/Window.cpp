@@ -2,7 +2,7 @@
 #include "../../PathConfig.hpp"
 #include "../../Utils/Utils.h"
 #include "../Keyboard/Keyboard.h"
-#include "Figures/Triangle/Triangle.h"
+#include "Figures/Rectangle/Rectangle.h"
 #include <iostream>
 
 Window::Window() {}
@@ -73,9 +73,6 @@ void Window::init() {
 }
 
 void Window::render() {
-  float vertices[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f};
-  Triangle triangle(vertices, VBO);
-
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
 
@@ -83,7 +80,14 @@ void Window::render() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(shaderProgram);
-    triangle.render();
+
+    float first[12]{-0.8f, 1.0f, 0.0f, -0.8f, 0.8f, 0.0f,
+                    -1.0f, 0.8f, 0.0f, -1.0f, 1.0f, 0.0f};
+    Rectangle(first, VBO).render();
+
+    float second[12]{-0.8f, -0.8f, 0.0f, -0.8f, -1.0f, 0.0f,
+                     -1.0f, -1.0f, 0.0f, -1.0f, -0.8f, 0.0f};
+    Rectangle(second, VBO).render();
 
     glfwSwapBuffers(window);
   }

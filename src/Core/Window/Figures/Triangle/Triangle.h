@@ -2,7 +2,7 @@
 
 class Triangle final {
 public:
-  Triangle(float[], unsigned);
+  Triangle(float[9], unsigned);
   void render();
 
 private:
