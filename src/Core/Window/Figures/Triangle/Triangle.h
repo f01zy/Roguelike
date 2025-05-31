@@ -2,10 +2,10 @@
 
 class Triangle final {
 public:
-  Triangle(float[9], unsigned);
+  Triangle(float[18], unsigned);
   void render();
 
 private:
+  float verticles[18];
   unsigned VAO, VBO;
-  float verticles[9];
 };

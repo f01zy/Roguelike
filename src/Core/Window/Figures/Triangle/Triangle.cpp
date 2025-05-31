@@ -3,8 +3,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-Triangle::Triangle(float data[9], unsigned VBO) : VBO(VBO) {
-  for (int i = 0; i < 9; i++) {
+Triangle::Triangle(float data[18], unsigned VBO) : VBO(VBO) {
+  for (int i = 0; i < 18; i++) {
     verticles[i] = data[i];
   }
 
@@ -17,8 +17,12 @@ void Triangle::render() {
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(verticles), verticles, GL_DYNAMIC_DRAW);
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 3, (void *)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 6, (void *)0);
   glEnableVertexAttribArray(0);
+
+  glVertexAttribPointer(1, 3, GL_FLOAT, false, sizeof(float) * 6,
+                        (void *)(sizeof(float) * 3));
+  glEnableVertexAttribArray(1);
 
   glDrawArrays(GL_TRIANGLES, 0, 3);
 

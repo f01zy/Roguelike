@@ -81,12 +81,14 @@ void Window::render() {
 
     glUseProgram(shaderProgram);
 
-    float first[12]{-0.8f, 1.0f, 0.0f, -0.8f, 0.8f, 0.0f,
-                    -1.0f, 0.8f, 0.0f, -1.0f, 1.0f, 0.0f};
+    float first[24]{-0.8f, 1.0f, 0.0f,  1.0f, 0.0f,  0.0f, -0.8f, 0.8f,
+                    0.0f,  0.0f, 1.0f,  0.0f, -1.0f, 0.8f, 0.0f,  0.0f,
+                    0.0f,  1.0f, -1.0f, 1.0f, 0.0f,  0.0f, 0.0f,  0.0f};
     Rectangle(first, VBO).render();
 
-    float second[12]{-0.8f, -0.8f, 0.0f, -0.8f, -1.0f, 0.0f,
-                     -1.0f, -1.0f, 0.0f, -1.0f, -0.8f, 0.0f};
+    float second[24]{-0.8f, -0.8f, 0.0f,  0.0f,  0.0f,  0.0f,  -0.8f, -1.0f,
+                     0.0f,  0.0f,  0.0f,  0.0f,  -1.0f, -1.0f, 0.0f,  0.0f,
+                     0.0f,  0.0f,  -1.0f, -0.8f, 0.0f,  0.0f,  0.0f,  0.0f};
     Rectangle(second, VBO).render();
 
     glfwSwapBuffers(window);
