@@ -11,5 +11,5 @@ void main()
 {
     gl_Position = vec4(position.x, position.y, position.z, 1.0);
     figureColor = color;
-    textureCoordinates = coordinates;
+    textureCoordinates = vec2(1.0f - coordinates.x, 1.0f - coordinates.y);
 }

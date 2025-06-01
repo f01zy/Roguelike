@@ -16,6 +16,5 @@ public:
 
 private:
   int program;
-  unsigned VBO;
   GLFWwindow *window;
 };

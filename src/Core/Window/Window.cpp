@@ -36,15 +36,13 @@ void Window::init() {
   program = glCreateProgram();
   Shader(program, GL_VERTEX_SHADER).use();
   Shader(program, GL_FRAGMENT_SHADER).use();
-
-  glGenBuffers(1, &VBO);
 }
 
 void Window::render() {
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
 
-    glClearColor(0, 0, 0, 0);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(program);
@@ -61,9 +59,8 @@ void Window::render() {
         -0.1f, 0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  //
     };
 
-    Rectangle(&vertices[0], VBO, Paths::PROJECT + "/textures/floor.jpg")
-        .render();
-    Rectangle(&vertices[32], VBO, Paths::PROJECT + "/textures/container.jpg")
+    Rectangle(&vertices[0], Paths::PROJECT + "/textures/floor.jpg").render();
+    Rectangle(&vertices[32], Paths::PROJECT + "/textures/container.jpg")
         .render();
 
     glfwSwapBuffers(window);

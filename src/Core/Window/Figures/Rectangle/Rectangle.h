@@ -4,7 +4,7 @@
 
 class Rectangle final {
 public:
-  Rectangle(float[32], unsigned, std::string texture = "");
+  Rectangle(float[32], std::string texture = "");
   void render();
 
 private:
