@@ -36,32 +36,33 @@ void Window::init() {
   program = glCreateProgram();
   Shader(program, GL_VERTEX_SHADER).use();
   Shader(program, GL_FRAGMENT_SHADER).use();
+  glUseProgram(program);
 }
 
 void Window::render() {
+  float vertices[64] = {
+      0.7f,  0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, //
+      0.7f,  -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, //
+      0.1f,  -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, //
+      0.1f,  0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, //
+
+      -0.7f, 0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, //
+      -0.7f, -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, //
+      -0.1f, -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, //
+      -0.1f, 0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  //
+  };
+
+  Rectangle cube(&vertices[0], Paths::PROJECT + "/textures/face.png");
+
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(program);
-
-    float vertices[64] = {
-        0.7f,  0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, //
-        0.7f,  -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, //
-        0.1f,  -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, //
-        0.1f,  0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, //
-
-        -0.7f, 0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, //
-        -0.7f, -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, //
-        -0.1f, -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, //
-        -0.1f, 0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  //
-    };
-
-    Rectangle(&vertices[0], Paths::PROJECT + "/textures/floor.jpg").render();
-    Rectangle(&vertices[32], Paths::PROJECT + "/textures/container.jpg")
-        .render();
+    // cube.rotate(1.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+    cube.translate(glm::vec3(0.001f, 0.001f, 0.0f));
+    cube.render();
 
     glfwSwapBuffers(window);
   }

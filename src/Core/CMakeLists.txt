@@ -1,7 +1,7 @@
 add_library(Core STATIC
   Core.cpp
   ./Window/Window.cpp
-  ./Window/Figures/Triangle/Triangle.cpp
+  ./Window/Figures/Figure/Figure.cpp
   ./Window/Figures/Rectangle/Rectangle.cpp
   ./Window/Shader/Shader.cpp
   ./Window/Texture/Texture.cpp

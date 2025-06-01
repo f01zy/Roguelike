@@ -5,8 +5,12 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-Shader::Shader(int program, int type) : program(program) {
+int Shader::program = 0;
+
+Shader::Shader(int program, int type) {
   Utils utils;
+
+  this->program = program;
 
   int success;
   std::string name = "";
