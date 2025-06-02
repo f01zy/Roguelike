@@ -1,5 +1,5 @@
 add_library(Map STATIC
-  Map.cpp
+  ./Map.cpp
 )
 
 target_link_libraries(Map

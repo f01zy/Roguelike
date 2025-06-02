@@ -1,5 +1,5 @@
 add_library(Utils STATIC
-  Utils.cpp 
+  ./Utils.cpp 
 )
 
 target_include_directories(Utils
