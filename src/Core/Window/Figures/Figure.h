@@ -15,7 +15,7 @@ public:
   void scale(glm::vec3);
 
 protected:
-  float verticles[32];
+  float verticles[20];
   unsigned VAO, VBO, EBO;
   unsigned texture{};
 

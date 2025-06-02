@@ -5,24 +5,24 @@
 class Map final {
 public:
   static std::vector<std::vector<char>> map;
+  static int currentRoom;
+  static int gridSize;
+  const static int roomSide = 10;
 
   Map();
   void generate();
+  void setRoomCoordinates(int, int, int &, int &, int &, int &);
 
 private:
-  int spawn{};
-  int blocks{};
-  int blocksToSquare{};
-  int gridSize{};
-  std::vector<std::vector<bool>> createdBlocksMap;
+  int rooms;
+  int roomsToSquare;
+  std::vector<std::vector<bool>> createdRoomsMap;
 
-  int minBlocks = 6;
-  int maxBlocks = 16;
-  int blockSide = 10;
+  int minRooms = 6;
+  int maxRooms = 9;
 
-  bool block(int);
+  bool createRoom(int);
   void initMaps();
   void makeDoors();
-  void makeDoorInCertainBlock(int, int, int);
-  void setBlockCoordinates(int, int, int &, int &, int &, int &);
+  void makeDoorInCertainRoom(int, int, int);
 };

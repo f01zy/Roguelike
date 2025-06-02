@@ -11,23 +11,25 @@
 Map::Map() {}
 
 std::vector<std::vector<char>> Map::map{};
+int Map::currentRoom = 0;
+int Map::gridSize = 0;
 
 void Map::generate() {
   Utils utils;
 
-  blocks = utils.random(minBlocks, maxBlocks);
-  blocksToSquare = utils.roundToSquare(blocks);
-  gridSize = std::sqrt(blocksToSquare);
+  rooms = utils.random(minRooms, maxRooms);
+  roomsToSquare = utils.roundToSquare(rooms);
+  gridSize = std::sqrt(roomsToSquare);
 
   initMaps();
 
-  int position = utils.random(0, blocksToSquare - 1);
+  int position = utils.random(0, roomsToSquare - 1);
   int createdBlocks = 1;
-  spawn = position;
+  currentRoom = position;
 
-  block(position);
+  createRoom(position);
 
-  while (createdBlocks < blocks) {
+  while (createdBlocks < rooms) {
     int side = utils.random(0, 3);
 
     if ((side == 0 && position % gridSize == 0) ||
@@ -51,87 +53,84 @@ void Map::generate() {
       break;
     }
 
-    if (block(position))
+    if (createRoom(position))
       createdBlocks++;
   }
 
   makeDoors();
 }
 
-bool Map::block(int position) {
+bool Map::createRoom(int position) {
   int x = position % gridSize;
   int y = position / gridSize;
 
-  if (gridSize == 0 || createdBlocksMap[y][x])
+  if (gridSize == 0 || createdRoomsMap[y][x])
     return false;
 
   int startX, startY, endX, endY;
-  setBlockCoordinates(x, y, startX, startY, endX, endY);
+  setRoomCoordinates(x, y, startX, startY, endX, endY);
 
   // if (startX != 0)
   //   startX--;
   // if (startY != 0)
   //   startY--;
 
-  for (int by = 0; by < map.size(); by++) {
-    for (int bx = 0; bx < map[by].size(); bx++) {
+  for (int by = 0; by < map.size(); by++)
+    for (int bx = 0; bx < map[by].size(); bx++)
       if ((by >= startY && by <= endY && (bx == startX || bx == endX)) ||
           (bx > startX && bx < endX && (by == startY || by == endY)))
         map[by][bx] = '#';
-    }
-  }
 
-  createdBlocksMap[y][x] = true;
+  createdRoomsMap[y][x] = true;
 
   return true;
 }
 
 void Map::initMaps() {
-  int x = blockSide * gridSize;
+  int x = roomSide * gridSize;
 
   map.resize(x);
   for (auto &row : map) {
     row.resize(x, ' ');
   }
 
-  createdBlocksMap.resize(gridSize);
-  for (auto &row : createdBlocksMap) {
+  createdRoomsMap.resize(gridSize);
+  for (auto &row : createdRoomsMap) {
     row.resize(gridSize, false);
   }
 }
 
 void Map::makeDoors() {
-  for (int i = 0; i < createdBlocksMap.size(); i++) {
-    for (int j = 0; j < createdBlocksMap[i].size(); j++) {
-      bool block = createdBlocksMap[i][j];
+  for (int i = 0; i < createdRoomsMap.size(); i++) {
+    for (int j = 0; j < createdRoomsMap[i].size(); j++) {
+      bool block = createdRoomsMap[i][j];
 
       if (!block)
         continue;
 
       bool sides[4]{};
 
-      if (j != 0 && createdBlocksMap[i][j - 1])
+      if (j != 0 && createdRoomsMap[i][j - 1])
         sides[0] = true;
-      if (j != gridSize - 1 && createdBlocksMap[i][j + 1])
+      if (j != gridSize - 1 && createdRoomsMap[i][j + 1])
         sides[1] = true;
-      if (i != 0 && createdBlocksMap[i - 1][j])
+      if (i != 0 && createdRoomsMap[i - 1][j])
         sides[2] = true;
-      if (i != gridSize - 1 && createdBlocksMap[i + 1][j])
+      if (i != gridSize - 1 && createdRoomsMap[i + 1][j])
         sides[3] = true;
 
-      for (int k = 0; k < 4; k++) {
+      for (int k = 0; k < 4; k++)
         if (sides[k])
-          makeDoorInCertainBlock(j, i, k);
-      }
+          makeDoorInCertainRoom(j, i, k);
     }
   }
 }
 
-void Map::makeDoorInCertainBlock(int x, int y, int side) {
+void Map::makeDoorInCertainRoom(int x, int y, int side) {
   int startX, startY, endX, endY;
-  setBlockCoordinates(x, y, startX, startY, endX, endY);
+  setRoomCoordinates(x, y, startX, startY, endX, endY);
 
-  int center = blockSide / 2;
+  int center = roomSide / 2;
   // bool isEven = blockSide % 2 == 0;
 
   int dx, dy;
@@ -158,10 +157,10 @@ void Map::makeDoorInCertainBlock(int x, int y, int side) {
   map[dy][dx] = ' ';
 }
 
-void Map::setBlockCoordinates(int x, int y, int &startX, int &startY, int &endX,
-                              int &endY) {
-  startX = x * blockSide;
-  startY = y * blockSide;
-  endX = startX + blockSide - 1;
-  endY = startY + blockSide - 1;
+void Map::setRoomCoordinates(int x, int y, int &startX, int &startY, int &endX,
+                             int &endY) {
+  startX = x * roomSide;
+  startY = y * roomSide;
+  endX = startX + roomSide - 1;
+  endY = startY + roomSide - 1;
 }

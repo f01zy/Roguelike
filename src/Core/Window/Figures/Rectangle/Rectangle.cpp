@@ -5,8 +5,8 @@
 #include <GLFW/glfw3.h>
 #include <SOIL/SOIL.h>
 
-Rectangle::Rectangle(float data[32], std::string path) {
-  for (int i = 0; i < 32; i++) {
+Rectangle::Rectangle(float data[20], std::string path) {
+  for (int i = 0; i < 20; i++) {
     verticles[i] = data[i];
   }
 
@@ -23,15 +23,11 @@ Rectangle::Rectangle(float data[32], std::string path) {
                GL_STATIC_DRAW);
 
   glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, (void *)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 5, (void *)0);
 
   glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 3, GL_FLOAT, false, sizeof(float) * 8,
+  glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 5,
                         (void *)(sizeof(float) * 3));
-
-  glEnableVertexAttribArray(2);
-  glVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(float) * 8,
-                        (void *)(sizeof(float) * 6));
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);

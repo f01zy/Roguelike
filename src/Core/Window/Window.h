@@ -7,8 +7,8 @@
 
 class Window final {
 public:
-  const int width = 600;
-  const int height = 600;
+  static const int width = 600;
+  static const int height = 600;
 
   Window();
   void init();

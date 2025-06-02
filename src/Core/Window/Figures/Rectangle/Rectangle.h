@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../Figure/Figure.h"
+#include "../Figure.h"
 #include <string>
 
 class Rectangle final : public Figure {
 public:
-  Rectangle(float[32], std::string texture = "");
+  Rectangle(float[20], std::string texture = "");
   void render();
 
 private:

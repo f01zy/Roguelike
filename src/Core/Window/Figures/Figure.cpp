@@ -1,5 +1,5 @@
 #include "Figure.h"
-#include "../../Shader/Shader.h"
+#include "../Shader/Shader.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/ext/matrix_transform.hpp>

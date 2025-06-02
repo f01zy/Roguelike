@@ -1,8 +1,10 @@
 #include "Window.h"
-#include "../../PathConfig.hpp"
 #include "../Keyboard/Keyboard.h"
-#include "Figures/Rectangle/Rectangle.h"
+#include "Renderer/Renderer.h"
 #include "Shader/Shader.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
 Window::Window() {}
@@ -40,19 +42,11 @@ void Window::init() {
 }
 
 void Window::render() {
-  float vertices[64] = {
-      0.7f,  0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, //
-      0.7f,  -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, //
-      0.1f,  -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, //
-      0.1f,  0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, //
+  glm::mat4 projection = glm::ortho(0.0f, (float)width, (float)height, 0.0f);
+  glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE,
+                     glm::value_ptr(projection));
 
-      -0.7f, 0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, //
-      -0.7f, -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, //
-      -0.1f, -0.3f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, //
-      -0.1f, 0.3f,  0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  //
-  };
-
-  Rectangle cube(&vertices[0], Paths::PROJECT + "/textures/face.png");
+  Renderer renderer;
 
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
@@ -60,9 +54,7 @@ void Window::render() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // cube.rotate(1.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-    cube.translate(glm::vec3(0.001f, 0.001f, 0.0f));
-    cube.render();
+    renderer.renderRoom();
 
     glfwSwapBuffers(window);
   }

@@ -5,6 +5,7 @@ add_library(Core STATIC
   ./Window/Figures/Rectangle/Rectangle.cpp
   ./Window/Shader/Shader.cpp
   ./Window/Texture/Texture.cpp
+  ./Window/Renderer/Renderer.cpp
   ./Keyboard/Keyboard.cpp
 )
 
