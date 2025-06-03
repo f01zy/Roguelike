@@ -8,12 +8,14 @@
 
 class Scene final {
 public:
-  Scene();
-  void renderRoom();
-  void renderEntity(Entity &entity);
-
-private:
   std::vector<std::vector<Rectangle *>> walls;
 
+  Scene();
+  void renderRoom();
+  void renderEntity(Entity &);
+  bool checkEntityCollision(float, float, float);
+
+private:
+  bool checkCollision(float, float, float, float, float, float);
   void initializeWall(float, float, float);
 };

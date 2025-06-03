@@ -42,6 +42,25 @@ void Scene::renderRoom() {
 }
 
 void Scene::renderEntity(Entity &entity) {
-  Rectangle entityFigure(entity.x, entity.y, entity.width);
+  Rectangle entityFigure(entity.x, entity.y, entity.size);
   entityFigure.render();
+}
+
+bool Scene::checkCollision(float ax, float ay, float as, float bx, float by,
+                           float bs) {
+  bool collisionX = ax + as >= bx && bx + bs >= ax;
+  bool collisionY = ay + as >= by && by + bs >= ay;
+
+  return collisionX && collisionY;
+}
+
+bool Scene::checkEntityCollision(float x, float y, float size) {
+  for (auto row : walls) {
+    for (auto wall : row) {
+      if (wall && checkCollision(x, y, size, wall->x, wall->y, wall->size))
+        return true;
+    }
+  }
+
+  return false;
 }

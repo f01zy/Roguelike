@@ -5,7 +5,7 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
 
-Figure::Figure(float x, float y, float size) : x(x), y(y) {
+Figure::Figure(float x, float y, float size) : x(x), y(y), size(size) {
   float data[20]{
       x,        y,        0.0f, 1.0f, 0.0f, //
       x + size, y,        0.0f, 0.0f, 0.0f, //

@@ -11,15 +11,24 @@ void Keyboard::callback(GLFWwindow *window, int key, int scancode, int action,
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
 
-  if (key == GLFW_KEY_W && action == GLFW_REPEAT)
-    Window::entityManager->player->top();
+  if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+    float x = Window::entityManager->player->x;
+    float y = Window::entityManager->player->y;
+    float speed = Window::entityManager->player->speed;
+    float size = Window::entityManager->player->size;
 
-  if (key == GLFW_KEY_A && action == GLFW_REPEAT)
-    Window::entityManager->player->left();
+    if (key == GLFW_KEY_W)
+      y -= speed;
+    if (key == GLFW_KEY_A)
+      x -= speed;
+    if (key == GLFW_KEY_S)
+      y += speed;
+    if (key == GLFW_KEY_D)
+      x += speed;
 
-  if (key == GLFW_KEY_S && action == GLFW_REPEAT)
-    Window::entityManager->player->bottom();
-
-  if (key == GLFW_KEY_D && action == GLFW_REPEAT)
-    Window::entityManager->player->right();
+    if (!Window::scene->checkEntityCollision(x, y, size)) {
+      Window::entityManager->player->x = x;
+      Window::entityManager->player->y = y;
+    }
+  }
 }

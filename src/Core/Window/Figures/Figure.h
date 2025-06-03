@@ -8,6 +8,7 @@
 class Figure {
 public:
   float x, y;
+  float size;
 
   Figure(float, float, float);
   Figure(Figure &figure) = delete;
