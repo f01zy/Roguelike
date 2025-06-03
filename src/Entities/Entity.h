@@ -2,13 +2,22 @@
 
 class Entity {
 public:
-  Entity(int, int, int, int, int);
+  float damage;
+  float health;
+  float armor;
+  float speed;
+  float width, height;
 
-protected:
-  int damage;
-  int health;
-  int armor;
-  int width, height;
+  float x = 300, y = 300;
 
-  int x = 0, y = 0;
+  Entity(float, float, float, float, float, float);
+  Entity(Entity &) = delete;
+
+  void top();
+  void bottom();
+  void left();
+  void right();
+
+private:
+  bool checkCollision();
 };

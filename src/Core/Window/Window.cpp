@@ -1,11 +1,13 @@
 #include "Window.h"
 #include "../Keyboard/Keyboard.h"
-#include "Renderer/Renderer.h"
 #include "Shader/Shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
+
+Scene *Window::scene = new Scene();
+EntityManager *Window::entityManager = new EntityManager();
 
 Window::Window() {}
 
@@ -46,15 +48,14 @@ void Window::render() {
   glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE,
                      glm::value_ptr(projection));
 
-  Renderer renderer;
-
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    renderer.renderRoom();
+    scene->renderRoom();
+    scene->renderEntity(*entityManager->player);
 
     glfwSwapBuffers(window);
   }

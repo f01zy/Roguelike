@@ -1,6 +1,7 @@
 add_subdirectory(Utils)
-add_subdirectory(Core)
 add_subdirectory(Map)
+add_subdirectory(Entities)
+add_subdirectory(Core)
 
 add_executable(main main.cpp)
 

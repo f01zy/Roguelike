@@ -7,7 +7,9 @@
 
 class Figure {
 public:
-  Figure();
+  float x, y;
+
+  Figure(float, float, float);
   Figure(Figure &figure) = delete;
 
   void translate(glm::vec3);
@@ -15,7 +17,7 @@ public:
   void scale(glm::vec3);
 
 protected:
-  float verticles[20];
+  float vertices[20];
   unsigned VAO, VBO, EBO;
   unsigned texture{};
 

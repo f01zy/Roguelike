@@ -5,7 +5,18 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
 
-Figure::Figure() {
+Figure::Figure(float x, float y, float size) : x(x), y(y) {
+  float data[20]{
+      x,        y,        0.0f, 1.0f, 0.0f, //
+      x + size, y,        0.0f, 0.0f, 0.0f, //
+      x + size, y + size, 0.0f, 0.0f, 1.0f, //
+      x,        y + size, 0.0f, 1.0f, 1.0f  //
+  };
+
+  for (int i = 0; i < 20; i++) {
+    vertices[i] = data[i];
+  }
+
   transform = glm::mat4(1.0f);
   use();
 }

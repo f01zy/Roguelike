@@ -5,17 +5,15 @@
 #include <GLFW/glfw3.h>
 #include <SOIL/SOIL.h>
 
-Rectangle::Rectangle(float data[20], std::string path) {
-  for (int i = 0; i < 20; i++) {
-    verticles[i] = data[i];
-  }
+Rectangle::Rectangle(float x, float y, float size, std::string path)
+    : Figure(x, y, size) {
 
   glGenVertexArrays(1, &VAO);
   glBindVertexArray(VAO);
 
   glGenBuffers(1, &VBO);
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(verticles), verticles, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
   glGenBuffers(1, &EBO);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);

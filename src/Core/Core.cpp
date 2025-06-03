@@ -11,7 +11,6 @@ void Core::start() {
   Window window;
 
   map.generate();
-
   window.init();
   window.render();
 }
