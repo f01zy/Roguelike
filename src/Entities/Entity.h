@@ -6,11 +6,11 @@ public:
   float health;
   float armor;
   float speed;
-  float size;
+  int width, height;
 
   float x = 300, y = 300;
 
-  Entity(float, float, float, float, float);
+  Entity(int, int, float, float, float, float);
   Entity(Entity &) = delete;
 
   void top();

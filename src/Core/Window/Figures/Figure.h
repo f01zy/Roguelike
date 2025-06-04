@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Shader/Shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -8,9 +9,9 @@
 class Figure {
 public:
   float x, y;
-  float size;
+  int width, height;
 
-  Figure(float, float, float);
+  Figure(float, float, int, int);
   Figure(Figure &figure) = delete;
 
   void translate(glm::vec3);

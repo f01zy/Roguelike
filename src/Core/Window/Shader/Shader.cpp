@@ -1,6 +1,4 @@
 #include "Shader.h"
-#include "../../../PathConfig.hpp"
-#include "../../../Utils/Utils.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>

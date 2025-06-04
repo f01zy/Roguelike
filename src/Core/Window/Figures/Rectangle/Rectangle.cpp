@@ -1,12 +1,10 @@
 #include "Rectangle.h"
-#include "../../Texture/Texture.h"
-#include "../../Window.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <SOIL/SOIL.h>
 
-Rectangle::Rectangle(float x, float y, float size, std::string path)
-    : Figure(x, y, size) {
+Rectangle::Rectangle(float x, float y, int width, int height, std::string path)
+    : Figure(x, y, width, height) {
 
   glGenVertexArrays(1, &VAO);
   glBindVertexArray(VAO);

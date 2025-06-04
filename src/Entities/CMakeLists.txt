@@ -1,5 +1,6 @@
 add_library(Entities STATIC
   ./Entity.cpp
+  ./Player/Player.cpp
   ./EntityManager/EntityManager.cpp
 )
 

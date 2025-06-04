@@ -1,16 +1,16 @@
 #include "Figure.h"
-#include "../Shader/Shader.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
 
-Figure::Figure(float x, float y, float size) : x(x), y(y), size(size) {
+Figure::Figure(float x, float y, int width, int height)
+    : x(x), y(y), width(width), height(height) {
   float data[20]{
-      x,        y,        0.0f, 1.0f, 0.0f, //
-      x + size, y,        0.0f, 0.0f, 0.0f, //
-      x + size, y + size, 0.0f, 0.0f, 1.0f, //
-      x,        y + size, 0.0f, 1.0f, 1.0f  //
+      x,         y,          0.0f, 1.0f, 0.0f, //
+      x + width, y,          0.0f, 0.0f, 0.0f, //
+      x + width, y + height, 0.0f, 0.0f, 1.0f, //
+      x,         y + height, 0.0f, 1.0f, 1.0f  //
   };
 
   for (int i = 0; i < 20; i++) {

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../Entity.h"
+#include "../Player/Player.h"
 
 class EntityManager final {
 public:
   EntityManager();
 
-  Entity *player;
+  Player *player;
 };

@@ -1,8 +1,9 @@
 #include "Keyboard.h"
-#include "../../Utils/Utils.h"
-#include <GLFW/glfw3.h>
 
-Keyboard::Keyboard() {}
+bool keys[GLFW_KEY_LAST];
+
+Keyboard::Keyboard(EntityManager *entityManager, Scene *scene)
+    : entityManager(entityManager), scene(scene) {}
 
 void Keyboard::callback(GLFWwindow *window, int key, int scancode, int action,
                         int mode) {
@@ -11,24 +12,34 @@ void Keyboard::callback(GLFWwindow *window, int key, int scancode, int action,
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
 
-  if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-    float x = Window::entityManager->player->x;
-    float y = Window::entityManager->player->y;
-    float speed = Window::entityManager->player->speed;
-    float size = Window::entityManager->player->size;
+  if (action == GLFW_PRESS)
+    keys[key] = true;
 
-    if (key == GLFW_KEY_W)
-      y -= speed;
-    if (key == GLFW_KEY_A)
-      x -= speed;
-    if (key == GLFW_KEY_S)
-      y += speed;
-    if (key == GLFW_KEY_D)
-      x += speed;
+  else if (action == GLFW_RELEASE)
+    keys[key] = false;
+}
 
-    if (!Window::scene->checkEntityCollision(x, y, size)) {
-      Window::entityManager->player->x = x;
-      Window::entityManager->player->y = y;
-    }
+void Keyboard::handle() {
+  float x = entityManager->player->x;
+  float y = entityManager->player->y;
+  float speed = entityManager->player->speed;
+  float width = entityManager->player->width;
+  float height = entityManager->player->height;
+
+  if (keys[GLFW_KEY_W])
+    y -= speed;
+
+  if (keys[GLFW_KEY_A])
+    x -= speed;
+
+  if (keys[GLFW_KEY_S])
+    y += speed;
+
+  if (keys[GLFW_KEY_D])
+    x += speed;
+
+  if (!scene->checkEntityCollision(x, y, width, height)) {
+    entityManager->player->x = x;
+    entityManager->player->y = y;
   }
 }

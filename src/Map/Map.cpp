@@ -4,7 +4,6 @@
 // 3 - bottom
 
 #include "Map.h"
-#include "../Utils/Utils.h"
 #include <cmath>
 #include <vector>
 

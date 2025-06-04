@@ -1,3 +1,3 @@
 #include "EntityManager.h"
 
-EntityManager::EntityManager() { player = new Entity(50, 5, 5, 100, 5); }
+EntityManager::EntityManager() { player = new Player(30, 30, 5, 5, 100, 5); }

@@ -1,13 +1,13 @@
 #include "Window.h"
-#include "../Keyboard/Keyboard.h"
 #include "Shader/Shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-Scene *Window::scene = new Scene();
 EntityManager *Window::entityManager = new EntityManager();
+Scene *Window::scene = new Scene(entityManager, width, height);
+Keyboard *Window::keyboard = new Keyboard(entityManager, scene);
 
 Window::Window() {}
 
@@ -54,8 +54,9 @@ void Window::render() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    scene->renderRoom();
-    scene->renderEntity(*entityManager->player);
+    keyboard->handle();
+
+    scene->render();
 
     glfwSwapBuffers(window);
   }
