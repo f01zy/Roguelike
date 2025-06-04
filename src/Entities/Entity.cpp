@@ -1,14 +1,14 @@
 #include "Entity.h"
+#include <vector>
 
 Entity::Entity(int width, int height, float damage, float armor, float health,
                float speed)
     : width(width), height(height), damage(damage), health(health),
       armor(armor), speed(speed) {}
 
-void Entity::top() { y -= speed; }
+void Entity::setPosition(int ax, int ay) {
+  x = ax;
+  y = ay;
+}
 
-void Entity::bottom() { y += speed; }
-
-void Entity::left() { x -= speed; }
-
-void Entity::right() { x += speed; }
+std::vector<int> Entity::getPosition() { return std::vector<int>{x, y}; }

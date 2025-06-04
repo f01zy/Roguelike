@@ -8,17 +8,22 @@
 
 class Figure {
 public:
-  float x, y;
-  int width, height;
+  const int width, height;
 
-  Figure(float, float, int, int);
+  Figure(int, int, int, int);
   Figure(Figure &figure) = delete;
 
   void translate(glm::vec3);
   void rotate(float, glm::vec3);
   void scale(glm::vec3);
 
+  void setPosition(int, int);
+  std::vector<int> getPosition();
+
 protected:
+  int x = 0;
+  int y = 0;
+
   float vertices[20];
   unsigned VAO, VBO, EBO;
   unsigned texture{};

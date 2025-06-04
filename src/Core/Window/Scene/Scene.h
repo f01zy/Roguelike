@@ -11,7 +11,7 @@
 class Scene final {
 public:
   Scene(EntityManager *, int, int);
-  bool checkEntityCollision(float, float, int, int);
+  bool checkEntityCollision(int, int, int, int);
   void render();
 
 private:
@@ -21,7 +21,7 @@ private:
 
   void renderRoom();
   void renderEntity(Entity &);
-  bool checkCollision(float, float, int, int, float, float, int, int);
-  void initializeWall(float, float, float);
+  bool checkCollision(int, int, int, int, int, int, int, int);
+  void initializeWall(int, int, int, int);
   void clearWalls();
 };

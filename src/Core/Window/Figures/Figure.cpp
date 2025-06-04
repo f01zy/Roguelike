@@ -4,13 +4,13 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/trigonometric.hpp>
 
-Figure::Figure(float x, float y, int width, int height)
+Figure::Figure(int x, int y, int width, int height)
     : x(x), y(y), width(width), height(height) {
   float data[20]{
-      x,         y,          0.0f, 1.0f, 0.0f, //
-      x + width, y,          0.0f, 0.0f, 0.0f, //
-      x + width, y + height, 0.0f, 0.0f, 1.0f, //
-      x,         y + height, 0.0f, 1.0f, 1.0f  //
+      (float)x,         (float)y,          0.0f, 1.0f, 0.0f, //
+      (float)x + width, (float)y,          0.0f, 0.0f, 0.0f, //
+      (float)x + width, (float)y + height, 0.0f, 0.0f, 1.0f, //
+      (float)x,         (float)y + height, 0.0f, 1.0f, 1.0f  //
   };
 
   for (int i = 0; i < 20; i++) {
@@ -40,3 +40,10 @@ void Figure::use() {
   unsigned location = glGetUniformLocation(Shader::program, "transform");
   glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(transform));
 }
+
+void Figure::setPosition(int ax, int ay) {
+  x = ax;
+  y = ay;
+}
+
+std::vector<int> Figure::getPosition() { return std::vector<int>{x, y}; }

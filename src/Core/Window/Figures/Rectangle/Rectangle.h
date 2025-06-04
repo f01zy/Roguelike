@@ -6,7 +6,7 @@
 
 class Rectangle final : public Figure {
 public:
-  Rectangle(float, float, int, int, std::string texture = "");
+  Rectangle(int, int, int, int, std::string texture = "");
   void render();
 
 private:

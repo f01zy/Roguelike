@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <SOIL/SOIL.h>
 
-Rectangle::Rectangle(float x, float y, int width, int height, std::string path)
+Rectangle::Rectangle(int x, int y, int width, int height, std::string path)
     : Figure(x, y, width, height) {
 
   glGenVertexArrays(1, &VAO);

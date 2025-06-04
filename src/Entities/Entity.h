@@ -1,20 +1,21 @@
 #pragma once
 
+#include <vector>
 class Entity {
 public:
-  float damage;
-  float health;
-  float armor;
-  float speed;
-  int width, height;
-
-  float x = 300, y = 300;
+  const float damage;
+  const float health;
+  const float armor;
+  const float speed;
+  const int width, height;
 
   Entity(int, int, float, float, float, float);
   Entity(Entity &) = delete;
 
-  void top();
-  void bottom();
-  void left();
-  void right();
+  void setPosition(int, int);
+  std::vector<int> getPosition();
+
+protected:
+  int x = 300;
+  int y = 300;
 };

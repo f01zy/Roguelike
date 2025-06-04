@@ -5,16 +5,22 @@
 
 class Map final {
 public:
-  static std::vector<std::vector<char>> map;
-  static int currentRoom;
-  static int gridSize;
   const static int roomSide = 10;
+  static std::vector<std::vector<char>> map;
+
+  static void setCurrentRoom(int);
+  static int getCurrentRoom();
+
+  static int getGridSize();
 
   Map();
   void generate();
   void setRoomCoordinates(int, int, int &, int &, int &, int &);
 
 private:
+  static int currentRoom;
+  static int gridSize;
+
   int rooms;
   int roomsToSquare;
   std::vector<std::vector<bool>> createdRoomsMap;

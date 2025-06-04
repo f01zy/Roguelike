@@ -4,18 +4,18 @@ Player::Player(int width, int height, float damage, float armor, float health,
                float speed)
     : Entity(width, height, damage, armor, health, speed) {}
 
-int Player::checkMovingInAnotherRoom(int width, int height, int position,
-                                     int gridSize) {
+int Player::checkMovingInAnotherRoom(int windowWidth, int windowHeight,
+                                     int position, int gridSize) {
   if (x < 0)
     return 0;
 
-  else if (x > width)
+  else if (x + width > windowWidth)
     return 1;
 
   else if (y < 0)
     return 2;
 
-  else if (y > height)
+  else if (y + height > windowHeight)
     return 3;
 
   return -1;

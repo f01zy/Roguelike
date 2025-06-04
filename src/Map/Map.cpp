@@ -163,3 +163,9 @@ void Map::setRoomCoordinates(int x, int y, int &startX, int &startY, int &endX,
   endX = startX + roomSide - 1;
   endY = startY + roomSide - 1;
 }
+
+int Map::getCurrentRoom() { return currentRoom; }
+
+void Map::setCurrentRoom(int room) { currentRoom = room; }
+
+int Map::getGridSize() { return gridSize; }

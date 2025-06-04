@@ -1,4 +1,5 @@
 #include "Keyboard.h"
+#include <vector>
 
 bool keys[GLFW_KEY_LAST];
 
@@ -20,26 +21,24 @@ void Keyboard::callback(GLFWwindow *window, int key, int scancode, int action,
 }
 
 void Keyboard::handle() {
-  float x = entityManager->player->x;
-  float y = entityManager->player->y;
+  std::vector<int> position = entityManager->player->getPosition();
   float speed = entityManager->player->speed;
   float width = entityManager->player->width;
   float height = entityManager->player->height;
 
   if (keys[GLFW_KEY_W])
-    y -= speed;
+    position[1] -= speed;
 
   if (keys[GLFW_KEY_A])
-    x -= speed;
+    position[0] -= speed;
 
   if (keys[GLFW_KEY_S])
-    y += speed;
+    position[1] += speed;
 
   if (keys[GLFW_KEY_D])
-    x += speed;
+    position[0] += speed;
 
-  if (!scene->checkEntityCollision(x, y, width, height)) {
-    entityManager->player->x = x;
-    entityManager->player->y = y;
+  if (!scene->checkEntityCollision(position[0], position[1], width, height)) {
+    entityManager->player->setPosition(position[0], position[1]);
   }
 }
