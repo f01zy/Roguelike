@@ -10,6 +10,7 @@
 Map::Map() {}
 
 std::vector<std::vector<char>> Map::map{};
+std::vector<std::vector<bool>> Map::createdRoomsMap{};
 int Map::currentRoom = 0;
 int Map::gridSize = 0;
 
@@ -130,8 +131,6 @@ void Map::makeDoorInCertainRoom(int x, int y, int side) {
   setRoomCoordinates(x, y, startX, startY, endX, endY);
 
   int center = roomSide / 2;
-  // bool isEven = blockSide % 2 == 0;
-
   int dx, dy;
 
   switch (side) {

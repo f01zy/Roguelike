@@ -6,6 +6,8 @@
 class Map final {
 public:
   const static int roomSide = 10;
+
+  static std::vector<std::vector<bool>> createdRoomsMap;
   static std::vector<std::vector<char>> map;
 
   static void setCurrentRoom(int);
@@ -16,6 +18,7 @@ public:
   Map();
   void generate();
   void setRoomCoordinates(int, int, int &, int &, int &, int &);
+  void render();
 
 private:
   static int currentRoom;
@@ -23,7 +26,6 @@ private:
 
   int rooms;
   int roomsToSquare;
-  std::vector<std::vector<bool>> createdRoomsMap;
 
   int minRooms = 6;
   int maxRooms = 9;

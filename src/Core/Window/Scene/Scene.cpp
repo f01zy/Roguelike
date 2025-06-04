@@ -6,6 +6,7 @@
 
 Scene::Scene(EntityManager *entityManager, int width, int height)
     : walls(Map::roomSide, std::vector<Rectangle *>(Map::roomSide, nullptr)),
+      mapBlocks(20, std::vector<Rectangle *>(20, nullptr)),
       entityManager(entityManager), width(width), height(height) {}
 
 void Scene::initializeWall(int x, int y, int width, int height) {
@@ -13,7 +14,8 @@ void Scene::initializeWall(int x, int y, int width, int height) {
   int b = y * height;
 
   walls[y][x] =
-      new Rectangle(a, b, width, height, Paths::PROJECT + "/textures/wall.jpg");
+      new Rectangle(a, b, width, height, std::vector<float>{0.0f, 0.0f, 0.0f},
+                    Paths::PROJECT + "/textures/wall.jpg");
 }
 
 void Scene::renderRoom() {
@@ -80,32 +82,12 @@ void Scene::render() {
   int moveInAnotherRoom = entityManager->player->checkMovingInAnotherRoom(
       width, height, Map::getCurrentRoom(), Map::getGridSize());
 
-  if (moveInAnotherRoom != -1) {
-    clearWalls();
-    int room;
-    int currentRoom = Map::getCurrentRoom();
-
-    switch (moveInAnotherRoom) {
-    case 0:
-      room = currentRoom - 1;
-      break;
-    case 1:
-      room = currentRoom + 1;
-      break;
-    case 2:
-      room = currentRoom - Map::getGridSize();
-      break;
-    case 3:
-      room = currentRoom + Map::getGridSize();
-      break;
-    }
-
-    Map::setCurrentRoom(room);
-    entityManager->player->moveInAnotherRoom(width, height, moveInAnotherRoom);
-  }
+  if (moveInAnotherRoom != -1)
+    moveToRoom(moveInAnotherRoom);
 
   renderRoom();
   renderEntity(*entityManager->player);
+  renderMap();
 }
 
 void Scene::clearWalls() {
@@ -114,4 +96,63 @@ void Scene::clearWalls() {
       walls[i][j] = nullptr;
     }
   }
+}
+
+void Scene::renderMap() {
+  for (int i = 0; i < Map::createdRoomsMap.size(); i++) {
+    for (int j = 0; j < Map::createdRoomsMap[i].size(); j++) {
+      if (Map::createdRoomsMap[i][j]) {
+        if (!mapBlocks[i][j]) {
+          int x = mapBlockSize * (j + 1) + mapX + mapPadding * j;
+          int y = mapBlockSize * (i + 1) + mapY + mapPadding * i;
+
+          std::vector<float> color;
+
+          if (Map::getCurrentRoom() == i * Map::getGridSize() + j)
+            color = {1.0f, 0.0f, 0.0f};
+
+          else
+            color = {0.0f, 0.0f, 0.0f};
+
+          mapBlocks[i][j] =
+              new Rectangle(x, y, mapBlockSize, mapBlockSize, color);
+        }
+
+        mapBlocks[i][j]->render();
+      }
+    }
+  }
+}
+
+void Scene::moveToRoom(int side) {
+  clearWalls();
+  int room;
+  int currentRoom = Map::getCurrentRoom();
+
+  switch (side) {
+  case 0:
+    room = currentRoom - 1;
+    break;
+  case 1:
+    room = currentRoom + 1;
+    break;
+  case 2:
+    room = currentRoom - Map::getGridSize();
+    break;
+  case 3:
+    room = currentRoom + Map::getGridSize();
+    break;
+  }
+
+  int ax = room % Map::getGridSize();
+  int ay = room / Map::getGridSize();
+
+  int bx = currentRoom % Map::getGridSize();
+  int by = currentRoom / Map::getGridSize();
+
+  mapBlocks[by][bx]->setColor(std::vector<float>{0.0f, 0.0f, 0.0f});
+  mapBlocks[ay][ax]->setColor(std::vector<float>{1.0f, 0.0f, 0.0f});
+
+  Map::setCurrentRoom(room);
+  entityManager->player->moveInAnotherRoom(width, height, side);
 }
