@@ -1,9 +1,31 @@
-add_subdirectory(Utils)
-add_subdirectory(Map)
-add_subdirectory(Entities)
-add_subdirectory(Core)
+set(
+  FILES
+    ./main.cpp
 
-add_executable(main main.cpp)
+    ./Core/Game.cpp
+    ./Core/Window/Window.cpp
+    ./Core/Window/Scene/Scene.cpp
+    
+    ./Assets/Shader/Shader.cpp
+    ./Assets/Texture/Texture.cpp
+
+    ./Input/Input.cpp
+
+    ./Map/Map.cpp
+    
+    ./Entities/Entity.cpp
+    ./Entities/Player/Player.cpp
+    ./Entities/EntityManager/EntityManager.cpp
+
+    ./Utils/Utils.cpp
+
+    ./Figures/Figure.cpp
+    ./Figures/Rectangle/Rectangle.cpp
+
+    ./Renderer/Renderer.cpp
+)
+
+add_executable(main ${FILES})
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
@@ -11,7 +33,6 @@ find_package(glfw3 REQUIRED)
 
 target_link_libraries(main 
   PRIVATE
-    Core
     OpenGL::GL
     GLEW
     glfw

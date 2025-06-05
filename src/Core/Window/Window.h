@@ -5,8 +5,10 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
+#include "../../Assets/Shader/Shader.h"
 #include "../../Entities/EntityManager/EntityManager.h"
-#include "../Keyboard/Keyboard.h"
+#include "../../Input/Input.h"
+#include "../../Map/Map.h"
 #include "Scene/Scene.h"
 
 class Window final {
@@ -14,9 +16,10 @@ public:
   static const int width = 600;
   static const int height = 600;
 
-  static EntityManager *entityManager;
-  static Scene *scene;
-  static Keyboard *keyboard;
+  EntityManager *entityManager;
+  Scene *scene;
+  Input *input;
+  Map *map;
 
   Window();
   void init();

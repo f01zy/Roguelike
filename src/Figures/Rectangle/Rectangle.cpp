@@ -2,11 +2,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <SOIL/SOIL.h>
-#include <vector>
 
-Rectangle::Rectangle(int x, int y, int width, int height,
-                     std::vector<float> color, std::string path)
-    : Figure(x, y, width, height, color, path) {
+Rectangle::Rectangle(glm::vec2 position, int width, int height, glm::vec3 color,
+                     std::string path)
+    : Figure(position, width, height, color, path) {
 
   glGenVertexArrays(1, &VAO);
   glBindVertexArray(VAO);
@@ -21,14 +20,15 @@ Rectangle::Rectangle(int x, int y, int width, int height,
                GL_STATIC_DRAW);
 
   glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, (void *)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * verticeSize,
+                        (void *)0);
 
   glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8,
+  glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * verticeSize,
                         (void *)(sizeof(float) * 3));
 
   glEnableVertexAttribArray(2);
-  glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8,
+  glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * verticeSize,
                         (void *)(sizeof(float) * 5));
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);

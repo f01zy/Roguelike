@@ -6,42 +6,43 @@
 #include <glm/trigonometric.hpp>
 #include <vector>
 
-Figure::Figure(int x, int y, int width, int height, std::vector<float> color,
+Figure::Figure(glm::vec2 position, int width, int height, glm::vec3 color,
                std::string path)
-    : x(x), y(y), width(width), height(height), color(color), path(path) {
+    : position(position), width(width), height(height), color(color),
+      path(path) {
   float data[32]{
-      (float)x,
-      (float)y,
+      position.x,
+      position.y,
       0.0f,
       1.0f,
       0.0f,
-      color[0],
-      color[1],
-      color[2],
-      (float)x + width,
-      (float)y,
+      color.x,
+      color.y,
+      color.z,
+      position.x + width,
+      position.y,
       0.0f,
       0.0f,
       0.0f,
-      color[0],
-      color[1],
-      color[2],
-      (float)x + width,
-      (float)y + height,
+      color.x,
+      color.y,
+      color.z,
+      position.x + width,
+      position.y + height,
       0.0f,
       0.0f,
       1.0f,
-      color[0],
-      color[1],
-      color[2],
-      (float)x,
-      (float)y + height,
+      color.x,
+      color.y,
+      color.z,
+      position.x,
+      position.y + height,
       0.0f,
       1.0f,
       1.0f,
-      color[0],
-      color[1],
-      color[2],
+      color.x,
+      color.y,
+      color.z,
   };
 
   for (int i = 0; i < 32; i++) {
@@ -72,16 +73,13 @@ void Figure::use() {
   glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(transform));
 }
 
-void Figure::setPosition(int ax, int ay) {
-  x = ax;
-  y = ay;
-}
+void Figure::setPosition(glm::vec2 newPosition) { position = newPosition; }
 
 void Figure::setColor(std::vector<float> newColor) {
-  for (int i = 0; i < verticesSize / 8; i++) {
-    vertices[i * 8 + 5] = newColor[0];
-    vertices[i * 8 + 6] = newColor[1];
-    vertices[i * 8 + 7] = newColor[2];
+  for (int i = 0; i < verticesSize / verticeSize; i++) {
+    vertices[i * verticeSize + 5] = newColor[0];
+    vertices[i * verticeSize + 6] = newColor[1];
+    vertices[i * verticeSize + 7] = newColor[2];
   }
 
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -89,4 +87,4 @@ void Figure::setColor(std::vector<float> newColor) {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-std::vector<int> Figure::getPosition() { return std::vector<int>{x, y}; }
+glm::vec2 Figure::getPosition() { return position; }

@@ -1,28 +1,26 @@
 #pragma once
 
-#include "../Utils/Utils.h"
+#include "../Figures/Rectangle/Rectangle.h"
 #include <vector>
 
 class Map final {
 public:
-  const static int roomSide = 10;
+  const int roomSide = 10;
 
-  static std::vector<std::vector<bool>> createdRoomsMap;
-  static std::vector<std::vector<char>> map;
+  std::vector<std::vector<char>> map;
 
-  static void setCurrentRoom(int);
-  static int getCurrentRoom();
+  void setCurrentRoom(int);
+  int getCurrentRoom();
 
-  static int getGridSize();
+  int getGridSize();
 
   Map();
   void generate();
-  void setRoomCoordinates(int, int, int &, int &, int &, int &);
-  void render();
+  void renderMiniMap();
 
 private:
-  static int currentRoom;
-  static int gridSize;
+  int currentRoom;
+  int gridSize;
 
   int rooms;
   int roomsToSquare;
@@ -30,6 +28,15 @@ private:
   int minRooms = 6;
   int maxRooms = 9;
 
+  const int miniMapX = 10;
+  const int miniMapY = 10;
+  const int miniMapPadding = 10;
+  const int miniMapBlockSize = 20;
+
+  std::vector<std::vector<bool>> createdRoomsMap;
+  std::vector<std::vector<Rectangle *>> miniMapBlocks;
+
+  void setRoomCoordinates(int, int, int &, int &, int &, int &);
   bool createRoom(int);
   void initMaps();
   void makeDoors();

@@ -1,15 +1,17 @@
 #include "Window.h"
-#include "Shader/Shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-EntityManager *Window::entityManager = new EntityManager();
-Scene *Window::scene = new Scene(entityManager, width, height);
-Keyboard *Window::keyboard = new Keyboard(entityManager, scene);
+Window::Window() {
+  map = new Map();
+  map->generate();
 
-Window::Window() {}
+  entityManager = new EntityManager();
+  scene = new Scene(entityManager, map, width, height);
+  input = new Input(entityManager, scene);
+}
 
 void Window::init() {
   glfwInit();
@@ -35,11 +37,13 @@ void Window::init() {
   }
 
   glViewport(0, 0, width, height);
-  glfwSetKeyCallback(window, Keyboard::callback);
+  glfwSetKeyCallback(window, Input::callback);
 
   program = glCreateProgram();
+
   Shader(program, GL_VERTEX_SHADER).use();
   Shader(program, GL_FRAGMENT_SHADER).use();
+
   glUseProgram(program);
 }
 
@@ -54,8 +58,7 @@ void Window::render() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    keyboard->handle();
-
+    input->handle();
     scene->render();
 
     glfwSwapBuffers(window);

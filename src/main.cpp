@@ -1,6 +1,6 @@
-#include "Core/Core.h"
+#include "Core/Game.h"
 
 int main(int argc, char **argv) {
-  Core core;
-  core.start();
+  Game game;
+  game.start();
 }

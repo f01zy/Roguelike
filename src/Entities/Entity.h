@@ -1,6 +1,8 @@
 #pragma once
 
-#include <vector>
+#include "../Figures/Rectangle/Rectangle.h"
+#include "glm/glm.hpp"
+
 class Entity {
 public:
   const float damage;
@@ -9,13 +11,15 @@ public:
   const float speed;
   const int width, height;
 
-  Entity(int, int, float, float, float, float);
+  Entity(glm::vec2, int, int, float, float, float, float);
   Entity(Entity &) = delete;
 
-  void setPosition(int, int);
-  std::vector<int> getPosition();
+  void setPosition(glm::vec2);
+  glm::vec2 getPosition();
+
+  void render();
+  bool checkCollision(glm::vec2, int, int, glm::vec2, int, int);
 
 protected:
-  int x = 300;
-  int y = 300;
+  glm::vec2 position = {300.0f, 300.0f};
 };

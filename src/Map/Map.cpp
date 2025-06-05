@@ -1,18 +1,9 @@
-// 0 - left
-// 1 - right
-// 2 - top
-// 3 - bottom
-
 #include "Map.h"
 #include <cmath>
 #include <vector>
 
-Map::Map() {}
-
-std::vector<std::vector<char>> Map::map{};
-std::vector<std::vector<bool>> Map::createdRoomsMap{};
-int Map::currentRoom = 0;
-int Map::gridSize = 0;
+Map::Map()
+    : miniMapBlocks(maxRooms, std::vector<Rectangle *>(maxRooms, nullptr)) {}
 
 void Map::generate() {
   Utils utils;
@@ -69,11 +60,6 @@ bool Map::createRoom(int position) {
 
   int startX, startY, endX, endY;
   setRoomCoordinates(x, y, startX, startY, endX, endY);
-
-  // if (startX != 0)
-  //   startX--;
-  // if (startY != 0)
-  //   startY--;
 
   for (int by = 0; by < map.size(); by++)
     for (int bx = 0; bx < map[by].size(); bx++)
@@ -161,6 +147,33 @@ void Map::setRoomCoordinates(int x, int y, int &startX, int &startY, int &endX,
   startY = y * roomSide;
   endX = startX + roomSide - 1;
   endY = startY + roomSide - 1;
+}
+
+void Map::renderMiniMap() {
+  for (int i = 0; i < createdRoomsMap.size(); i++) {
+    for (int j = 0; j < createdRoomsMap[i].size(); j++) {
+      if (!createdRoomsMap[i][j])
+        continue;
+
+      if (!miniMapBlocks[i][j]) {
+        int x = miniMapBlockSize * (j + 1) + miniMapX + miniMapPadding * j;
+        int y = miniMapBlockSize * (i + 1) + miniMapY + miniMapPadding * i;
+
+        glm::vec3 color;
+
+        if (getCurrentRoom() == i * getGridSize() + j)
+          color = {1.0f, 0.0f, 0.0f};
+
+        else
+          color = {0.0f, 0.0f, 0.0f};
+
+        miniMapBlocks[i][j] = new Rectangle(glm::vec2(x, y), miniMapBlockSize,
+                                            miniMapBlockSize, color);
+      }
+
+      miniMapBlocks[i][j]->render();
+    }
+  }
 }
 
 int Map::getCurrentRoom() { return currentRoom; }

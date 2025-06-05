@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../../PathConfig.hpp"
-#include "../../../Utils/Utils.h"
+#include "../../PathConfig.hpp"
+#include "../../Utils/Utils.h"
 
 class Shader final {
 public:

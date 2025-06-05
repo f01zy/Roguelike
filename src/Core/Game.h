@@ -1,7 +1,7 @@
 #pragma once
 
-class Core final {
+class Game final {
 public:
-  Core();
+  Game();
   void start();
 };

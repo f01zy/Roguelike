@@ -4,7 +4,5 @@
 
 class Player : public Entity {
 public:
-  Player(int, int, float, float, float, float);
-  int checkMovingInAnotherRoom(int, int, int, int);
-  void moveInAnotherRoom(int, int, int);
+  Player(glm::vec2, int, int, float, float, float, float);
 };
