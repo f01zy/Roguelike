@@ -1,27 +1,20 @@
 set(
   FILES
     ./main.cpp
-
     ./Core/Game.cpp
     ./Core/Window/Window.cpp
     ./Core/Window/Scene/Scene.cpp
-    
     ./Assets/Shader/Shader.cpp
     ./Assets/Texture/Texture.cpp
-
     ./Input/Input.cpp
-
+    ./Camera/Camera.cpp
     ./Map/Map.cpp
-    
     ./Entities/Entity.cpp
     ./Entities/Player/Player.cpp
     ./Entities/EntityManager/EntityManager.cpp
-
     ./Utils/Utils.cpp
-
     ./Figures/Figure.cpp
     ./Figures/Rectangle/Rectangle.cpp
-
     ./Renderer/Renderer.cpp
 )
 

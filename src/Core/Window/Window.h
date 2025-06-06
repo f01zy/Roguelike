@@ -3,9 +3,12 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <iostream>
 #include <string>
 
 #include "../../Assets/Shader/Shader.h"
+#include "../../Camera/Camera.h"
 #include "../../Entities/EntityManager/EntityManager.h"
 #include "../../Input/Input.h"
 #include "../../Map/Map.h"
@@ -20,6 +23,7 @@ public:
   Scene *scene;
   Input *input;
   Map *map;
+  Camera *camera;
 
   Window();
   void init();

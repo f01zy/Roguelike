@@ -1,7 +1,4 @@
 #include "Rectangle.h"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <SOIL/SOIL.h>
 
 Rectangle::Rectangle(glm::vec2 position, int width, int height, glm::vec3 color,
                      std::string path)

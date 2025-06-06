@@ -1,6 +1,4 @@
 #include "Map.h"
-#include <cmath>
-#include <vector>
 
 Map::Map()
     : miniMapBlocks(maxRooms, std::vector<Rectangle *>(maxRooms, nullptr)) {}
@@ -60,6 +58,11 @@ bool Map::createRoom(int position) {
 
   int startX, startY, endX, endY;
   setRoomCoordinates(x, y, startX, startY, endX, endY);
+
+  if (startX != 0)
+    startX--;
+  if (startY != 0)
+    startY--;
 
   for (int by = 0; by < map.size(); by++)
     for (int bx = 0; bx < map[by].size(); bx++)

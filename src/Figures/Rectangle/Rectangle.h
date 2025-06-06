@@ -2,6 +2,9 @@
 
 #include "../../Assets/Texture/Texture.h"
 #include "../Figure.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <SOIL/SOIL.h>
 
 class Rectangle final : public Figure {
 public:

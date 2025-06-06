@@ -1,11 +1,13 @@
 #pragma once
 
 #include "../Figures/Rectangle/Rectangle.h"
+#include <cmath>
 #include <vector>
 
 class Map final {
 public:
-  const int roomSide = 10;
+  const int roomSide = 15;
+  const int blockSide = 50;
 
   std::vector<std::vector<char>> map;
 

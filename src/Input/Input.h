@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../Core/Window/Scene/Scene.h"
 #include "../Entities/EntityManager/EntityManager.h"
-#include "../Types/Types.h"
 #include <GLFW/glfw3.h>
 
 class Input final {

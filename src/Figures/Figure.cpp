@@ -1,10 +1,4 @@
 #include "Figure.h"
-#include <GL/glew.h>
-#include <GL/glext.h>
-#include <GLFW/glfw3.h>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/trigonometric.hpp>
-#include <vector>
 
 Figure::Figure(glm::vec2 position, int width, int height, glm::vec3 color,
                std::string path)

@@ -1,5 +1,4 @@
 #include "Input.h"
-#include "../Core/Window/Scene/Scene.h"
 
 bool keys[GLFW_KEY_LAST];
 
