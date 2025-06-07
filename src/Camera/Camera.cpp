@@ -1,9 +1,15 @@
 #include "Camera.h"
+#include "../Assets/Shader/Shader.h"
+#include "../Entities/Entity.h"
+#include <GL/glew.h>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
-Camera::Camera(glm::vec2 position, int width, int height, int mapSide)
-    : position(position), width(width), height(height), mapSide(mapSide) {}
+Camera::Camera(Entity &entity, int width, int height)
+    : position(glm::vec2(0.0f, 0.0f)), entity(entity), width(width),
+      height(height) {}
 
-void Camera::update(Entity &entity) {
+void Camera::update() {
   glm::vec2 entityPosition = entity.getPosition();
 
   int offsetX = std::floor(width / 2) - std::floor(entity.width / 2);
@@ -11,17 +17,6 @@ void Camera::update(Entity &entity) {
 
   position.x = entityPosition.x - offsetX;
   position.y = entityPosition.y - offsetY;
-
-  float halfScreenWidth = static_cast<float>(width) / 2.0f;
-  float halfScreenHeight = static_cast<float>(height) / 2.0f;
-
-  float minX = 0.0f;
-  float maxX = static_cast<float>(mapSide) - halfScreenWidth;
-  float minY = 0.0f;
-  float maxY = static_cast<float>(mapSide) - halfScreenHeight;
-
-  position.x = std::clamp(position.x, minX, maxX);
-  position.y = std::clamp(position.y, minY, maxY);
 
   glm::mat4 view = glm::translate(glm::mat4(1.0f), -glm::vec3(position, 0.0f));
   unsigned location = glGetUniformLocation(Shader::program, "view");

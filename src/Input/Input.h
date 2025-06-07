@@ -1,18 +1,16 @@
 #pragma once
 
-#include "../Core/Window/Scene/Scene.h"
-#include "../Entities/EntityManager/EntityManager.h"
 #include <GLFW/glfw3.h>
+
+class EntityManager;
 
 class Input final {
 public:
-  Input(EntityManager *, Scene *scene);
+  Input();
   Input(Input &) = delete;
 
   static void callback(GLFWwindow *, int, int, int, int);
-  void handle();
+  void handleMovement();
 
-private:
-  EntityManager *entityManager;
-  Scene *scene;
+  EntityManager &entityManager;
 };

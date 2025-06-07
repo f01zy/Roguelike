@@ -1,9 +1,10 @@
 set(
   FILES
     ./main.cpp
+    ./ObjectsManager/ObjectsManager.cpp
     ./Core/Game.cpp
-    ./Core/Window/Window.cpp
-    ./Core/Window/Scene/Scene.cpp
+    ./Core/Window.cpp
+    ./Core/Scene.cpp
     ./Assets/Shader/Shader.cpp
     ./Assets/Texture/Texture.cpp
     ./Input/Input.cpp
@@ -13,9 +14,9 @@ set(
     ./Entities/Player/Player.cpp
     ./Entities/EntityManager/EntityManager.cpp
     ./Utils/Utils.cpp
+    ./Utils/Collision.cpp
     ./Figures/Figure.cpp
     ./Figures/Rectangle/Rectangle.cpp
-    ./Renderer/Renderer.cpp
 )
 
 add_executable(main ${FILES})

@@ -1,23 +1,18 @@
 #pragma once
 
-#include "../Assets/Shader/Shader.h"
-#include "../Entities/Entity.h"
-#include "../Map/Map.h"
-#include <GL/glew.h>
-#include <algorithm>
-#include <cmath>
 #include <glm/glm.hpp>
+
+class Entity;
 
 class Camera final {
 public:
-  Camera(glm::vec2, int, int, int);
+  Camera(Entity &, int, int);
   Camera(Camera &) = delete;
-
-  void update(Entity &);
+  static Camera getInstance();
+  void update();
 
 private:
   const int width, height;
-  const int mapSide;
-
+  Entity &entity;
   glm::vec2 position;
 };

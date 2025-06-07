@@ -1,4 +1,6 @@
 #include "Texture.h"
+#include <GL/glew.h>
+#include <SOIL/SOIL.h>
 
 Texture::Texture(std::string path, unsigned &texture) {
   glGenTextures(1, &texture);

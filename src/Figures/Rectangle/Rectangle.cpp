@@ -1,4 +1,7 @@
 #include "Rectangle.h"
+#include "../../Assets/Shader/Shader.h"
+#include "../../Assets/Texture/Texture.h"
+#include <GL/glew.h>
 
 Rectangle::Rectangle(glm::vec2 position, int width, int height, glm::vec3 color,
                      std::string path)

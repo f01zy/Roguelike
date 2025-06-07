@@ -1,16 +1,13 @@
 #include "Window.h"
+#include "../Assets/Shader/Shader.h"
+#include "../Input/Input.h"
+#include "Scene.h"
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <iostream>
 
-Window::Window() {
-  map = new Map();
-  map->generate();
-  int mapSide = map->blockSide * map->roomSide * map->getGridSize();
-
-  entityManager = new EntityManager();
-  camera =
-      new Camera(entityManager->player->getPosition(), width, height, mapSide);
-  scene = new Scene(entityManager, map, camera, width, height);
-  input = new Input(entityManager, scene);
-}
+Window::Window() {}
 
 void Window::init() {
   glfwInit();
@@ -49,7 +46,10 @@ void Window::render() {
   glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE,
                      glm::value_ptr(projection));
 
-  scene->init();
+  Input input;
+  Scene scene(width, height);
+
+  scene.init();
 
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
@@ -57,8 +57,8 @@ void Window::render() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    input->handle();
-    scene->render();
+    input.handleMovement();
+    scene.render();
 
     glfwSwapBuffers(window);
   }

@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../Figures/Rectangle/Rectangle.h"
 #include "glm/glm.hpp"
+
+class Rectangle;
 
 class Entity {
 public:
@@ -18,7 +19,6 @@ public:
   glm::vec2 getPosition();
 
   void render();
-  bool checkCollision(glm::vec2, int, int, glm::vec2, int, int);
 
 protected:
   glm::vec2 position = {300.0f, 300.0f};

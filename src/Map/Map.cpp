@@ -1,7 +1,17 @@
 #include "Map.h"
+#include "../Figures/Rectangle/Rectangle.h"
+#include "../Utils/Utils.h"
+#include <glm/glm.hpp>
 
 Map::Map()
-    : miniMapBlocks(maxRooms, std::vector<Rectangle *>(maxRooms, nullptr)) {}
+    : miniMapBlocks(maxRooms, std::vector<Rectangle *>(maxRooms, nullptr)) {
+  generate();
+}
+
+Map &Map::getInstance() {
+  static Map map;
+  return map;
+}
 
 void Map::generate() {
   Utils utils;

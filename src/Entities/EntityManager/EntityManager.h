@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../Map/Map.h"
 #include "../Player/Player.h"
 
 class EntityManager final {
 public:
   EntityManager();
+  static EntityManager &getInstance();
 
-  Player *player;
+  Player player;
 };

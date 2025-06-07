@@ -1,4 +1,7 @@
 #include "Figure.h"
+#include "../Assets/Shader/Shader.h"
+#include <GL/glew.h>
+#include <vector>
 
 Figure::Figure(glm::vec2 position, int width, int height, glm::vec3 color,
                std::string path)

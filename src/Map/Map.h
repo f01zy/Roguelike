@@ -1,8 +1,9 @@
 #pragma once
 
-#include "../Figures/Rectangle/Rectangle.h"
 #include <cmath>
 #include <vector>
+
+class Rectangle;
 
 class Map final {
 public:
@@ -11,25 +12,21 @@ public:
 
   std::vector<std::vector<char>> map;
 
+  Map();
   void setCurrentRoom(int);
   int getCurrentRoom();
-
   int getGridSize();
-
-  Map();
+  static Map &getInstance();
   void generate();
   void renderMiniMap();
 
 private:
   int currentRoom;
   int gridSize;
-
   int rooms;
   int roomsToSquare;
-
   int minRooms = 6;
   int maxRooms = 9;
-
   const int miniMapX = 10;
   const int miniMapY = 10;
   const int miniMapPadding = 10;

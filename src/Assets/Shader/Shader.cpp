@@ -1,4 +1,8 @@
 #include "Shader.h"
+#include "../../PathConfig.hpp"
+#include "../../Utils/Utils.h"
+#include <GL/glew.h>
+#include <iostream>
 
 int Shader::program = 0;
 
