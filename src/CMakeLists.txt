@@ -16,6 +16,7 @@ set(
     ./Entities/EntityManager/EntityManager.cpp
     ./Utils/Utils.cpp
     ./Utils/Collision.cpp
+    ./Utils/RoomsMovement.cpp
     ./Figures/Figure.cpp
     ./Figures/Rectangle/Rectangle.cpp
 )

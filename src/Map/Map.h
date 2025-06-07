@@ -8,7 +8,7 @@ class Rectangle;
 
 class Map final {
 public:
-  const int roomSide = 13;
+  const int roomSide = 10;
   const int blockSide = 50;
   const int minRooms = 6;
   const int maxRooms = 9;
@@ -24,11 +24,8 @@ public:
 
   static Map &getInstance();
   void generate();
-  void renderMinimap();
 
 private:
-  Minimap minimap;
-
   int currentRoom;
   int gridSize;
   int rooms;

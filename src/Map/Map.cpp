@@ -4,7 +4,7 @@
 #include "Minimap.h"
 #include <glm/glm.hpp>
 
-Map::Map() : minimap(Minimap(*this)) { generate(); }
+Map::Map() { generate(); }
 
 Map &Map::getInstance() {
   static Map map;
@@ -22,7 +22,7 @@ void Map::generate() {
 
   int position = utils.random(0, roomsToSquare - 1);
   int createdBlocks = 1;
-  currentRoom = position;
+  currentRoom = 0;
 
   createRoom(position);
 
@@ -165,5 +165,3 @@ int Map::getCurrentRoom() { return currentRoom; }
 void Map::setCurrentRoom(int room) { currentRoom = room; }
 
 int Map::getGridSize() { return gridSize; }
-
-void Map::renderMinimap() { minimap.render(); }

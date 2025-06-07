@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Camera/Camera.h"
+#include "../Map/Minimap.h"
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -20,8 +21,9 @@ private:
   int width, height;
 
   ObjectsManager &objectsManager;
-  Map &map;
   EntityManager &entityManager;
+  Map &map;
+  Minimap minimap;
   Camera camera;
 
   void renderObjects();

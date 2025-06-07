@@ -3,13 +3,35 @@
 #include "../Types/Types.h"
 #include "Map.h"
 #include <glm/glm.hpp>
+#include <iostream>
 
-Minimap::Minimap(Map &map)
-    : map(map), minimapBlocks(map.maxRooms,
-                              std::vector<Rectangle *>(map.maxRooms, nullptr)) {
+Minimap::Minimap()
+    : roomMovement(RoomsMovement()), map(Map::getInstance()),
+      minimapBlocks(map.maxRooms,
+                    std::vector<Rectangle *>(map.maxRooms, nullptr)) {}
+
+void Minimap::updateBlocks(int newRoom) {
+  int currentRoom = map.getCurrentRoom();
+
+  int ax = newRoom % map.getGridSize();
+  int ay = newRoom / map.getGridSize();
+  minimapBlocks[ay][ax]->setColor(std::vector<float>{1.0f, 0.0f, 0.0f});
+
+  int bx = currentRoom % map.getGridSize();
+  int by = currentRoom / map.getGridSize();
+  minimapBlocks[by][bx]->setColor(std::vector<float>{0.0f, 0.0f, 0.0f});
 }
 
 void Minimap::render() {
+  int currentRoom = map.getCurrentRoom();
+  int newRoom = roomMovement.check();
+
+  if (currentRoom != newRoom) {
+    updateBlocks(newRoom);
+    map.setCurrentRoom(newRoom);
+    std::cout << newRoom << std::endl;
+  }
+
   for (int i = 0; i < map.getGridSize(); i++) {
     for (int j = 0; j < map.getGridSize(); j++) {
       if (!map.createdRooms[i][j])

@@ -9,7 +9,7 @@
 #include <iostream>
 
 Scene::Scene(int width, int height)
-    : width(width), height(height),
+    : width(width), height(height), minimap(Minimap()),
       objectsManager(ObjectsManager::getInstance()), map(Map::getInstance()),
       entityManager(EntityManager::getInstance()),
       camera(Camera(entityManager.player, width, height)) {}
@@ -52,5 +52,5 @@ void Scene::render() {
   renderObjects();
   entityManager.player.render();
   camera.update();
-  map.renderMinimap();
+  minimap.render();
 }
