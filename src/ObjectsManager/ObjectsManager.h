@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-class Rectangle;
+class Figure;
 class Map;
 
 class ObjectsManager final {
@@ -11,8 +11,8 @@ public:
   ObjectsManager();
   static ObjectsManager &getInstance();
 
-  Rectangle *get(int, int);
-  void add(int, int, Rectangle *);
+  Figure *get(int, int);
+  void add(int, int, Figure *);
   void remove(int, int);
   void clear();
   glm::vec2 size();
@@ -20,5 +20,5 @@ public:
   Map &map;
 
 private:
-  std::vector<std::vector<Rectangle *>> objects;
+  std::vector<std::vector<Figure *>> objects;
 };

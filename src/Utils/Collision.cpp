@@ -1,6 +1,6 @@
 #include "Collision.h"
 #include "../Entities/Entity.h"
-#include "../Figures/Rectangle/Rectangle.h"
+#include "../Figures/Figure.h"
 #include "../ObjectsManager/ObjectsManager.h"
 
 bool Collision::checkAllObjectsCollision(Entity &entity) {
@@ -9,7 +9,7 @@ bool Collision::checkAllObjectsCollision(Entity &entity) {
 
   for (int i = 0; i < size.y; i++) {
     for (int j = 0; j < size.x; j++) {
-      Rectangle *object = objectsManager.get(j, i);
+      Figure *object = objectsManager.get(j, i);
 
       if (object) {
         glm::vec2 objectPosition = object->getPosition();

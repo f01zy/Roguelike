@@ -5,6 +5,7 @@
 #include "../Map/Map.h"
 #include "../ObjectsManager/ObjectsManager.h"
 #include "../PathConfig.hpp"
+#include "../Types/Types.h"
 #include <iostream>
 
 Scene::Scene(int width, int height)
@@ -24,8 +25,8 @@ void Scene::init() {
 
         objectsManager.add(
             j, i,
-            new Rectangle(glm::vec2(x, y), map.blockSide, map.blockSide,
-                          glm::vec3(0.0f, 0.0f, 0.0f),
+            new Rectangle(glm::vec2(x, y), DEFAULT, map.blockSide,
+                          map.blockSide, glm::vec3(0.0f, 0.0f, 0.0f),
                           Paths::PROJECT + "/textures/wall.jpg"));
 
         std::cout << "initialize object (" << i << ", " << j << ")"
@@ -51,4 +52,5 @@ void Scene::render() {
   renderObjects();
   entityManager.player.render();
   camera.update();
+  map.renderMinimap();
 }

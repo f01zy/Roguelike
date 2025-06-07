@@ -10,6 +10,7 @@ set(
     ./Input/Input.cpp
     ./Camera/Camera.cpp
     ./Map/Map.cpp
+    ./Map/Minimap.cpp
     ./Entities/Entity.cpp
     ./Entities/Player/Player.cpp
     ./Entities/EntityManager/EntityManager.cpp

@@ -1,21 +1,21 @@
 #include "ObjectsManager.h"
-#include "../Figures/Rectangle/Rectangle.h"
+#include "../Figures/Figure.h"
 #include "../Map/Map.h"
 
 ObjectsManager::ObjectsManager()
     : map(Map::getInstance()),
-      objects(map.roomSide * map.getGridSize(),
-              std::vector<Rectangle *>(map.roomSide * map.getGridSize(),
-                                       nullptr)) {}
+      objects(
+          map.roomSide * map.getGridSize(),
+          std::vector<Figure *>(map.roomSide * map.getGridSize(), nullptr)) {}
 
 ObjectsManager &ObjectsManager::getInstance() {
   static ObjectsManager objectsManager;
   return objectsManager;
 }
 
-Rectangle *ObjectsManager::get(int x, int y) { return objects[y][x]; }
+Figure *ObjectsManager::get(int x, int y) { return objects[y][x]; }
 
-void ObjectsManager::add(int x, int y, Rectangle *object) {
+void ObjectsManager::add(int x, int y, Figure *object) {
   objects[y][x] = object;
 }
 

@@ -1,11 +1,10 @@
 #include "Rectangle.h"
-#include "../../Assets/Shader/Shader.h"
 #include "../../Assets/Texture/Texture.h"
 #include <GL/glew.h>
 
-Rectangle::Rectangle(glm::vec2 position, int width, int height, glm::vec3 color,
-                     std::string path)
-    : Figure(position, width, height, color, path) {
+Rectangle::Rectangle(glm::vec2 position, int renderType, int width, int height,
+                     glm::vec3 color, std::string path)
+    : Figure(position, renderType, width, height, color, path) {
 
   glGenVertexArrays(1, &VAO);
   glBindVertexArray(VAO);
@@ -36,21 +35,4 @@ Rectangle::Rectangle(glm::vec2 position, int width, int height, glm::vec3 color,
 
   if (path.size() != 0)
     Texture(path, texture);
-}
-
-void Rectangle::render() {
-  glBindVertexArray(VAO);
-
-  int useTexturePosition = glGetUniformLocation(Shader::program, "useTexture");
-
-  if (path.size() != 0)
-    glUniform1i(useTexturePosition, 1);
-
-  else
-    glUniform1i(useTexturePosition, 0);
-
-  glBindTexture(GL_TEXTURE_2D, texture);
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-  glBindVertexArray(0);
 }

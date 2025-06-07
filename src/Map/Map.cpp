@@ -1,12 +1,10 @@
 #include "Map.h"
-#include "../Figures/Rectangle/Rectangle.h"
+#include "../Types/Types.h"
 #include "../Utils/Utils.h"
+#include "Minimap.h"
 #include <glm/glm.hpp>
 
-Map::Map()
-    : miniMapBlocks(maxRooms, std::vector<Rectangle *>(maxRooms, nullptr)) {
-  generate();
-}
+Map::Map() : minimap(Minimap(*this)) { generate(); }
 
 Map &Map::getInstance() {
   static Map map;
@@ -31,23 +29,23 @@ void Map::generate() {
   while (createdBlocks < rooms) {
     int side = utils.random(0, 3);
 
-    if ((side == 0 && position % gridSize == 0) ||
-        (side == 1 && (position + 1) % gridSize == 0) ||
-        (side == 2 && position < gridSize) ||
-        (side == 3 && position >= gridSize * (gridSize - 1)))
+    if ((side == LEFT && position % gridSize == 0) ||
+        (side == RIGHT && (position + 1) % gridSize == 0) ||
+        (side == TOP && position < gridSize) ||
+        (side == BOTTOM && position >= gridSize * (gridSize - 1)))
       continue;
 
     switch (side) {
-    case 0:
+    case LEFT:
       position--;
       break;
-    case 1:
+    case RIGHT:
       position++;
       break;
-    case 2:
+    case TOP:
       position -= gridSize;
       break;
-    case 3:
+    case BOTTOM:
       position += gridSize;
       break;
     }
@@ -63,7 +61,7 @@ bool Map::createRoom(int position) {
   int x = position % gridSize;
   int y = position / gridSize;
 
-  if (gridSize == 0 || createdRoomsMap[y][x])
+  if (gridSize == 0 || createdRooms[y][x])
     return false;
 
   int startX, startY, endX, endY;
@@ -80,7 +78,7 @@ bool Map::createRoom(int position) {
           (bx > startX && bx < endX && (by == startY || by == endY)))
         map[by][bx] = '#';
 
-  createdRoomsMap[y][x] = true;
+  createdRooms[y][x] = true;
 
   return true;
 }
@@ -93,30 +91,30 @@ void Map::initMaps() {
     row.resize(x, ' ');
   }
 
-  createdRoomsMap.resize(gridSize);
-  for (auto &row : createdRoomsMap) {
+  createdRooms.resize(gridSize);
+  for (auto &row : createdRooms) {
     row.resize(gridSize, false);
   }
 }
 
 void Map::makeDoors() {
-  for (int i = 0; i < createdRoomsMap.size(); i++) {
-    for (int j = 0; j < createdRoomsMap[i].size(); j++) {
-      bool block = createdRoomsMap[i][j];
+  for (int i = 0; i < createdRooms.size(); i++) {
+    for (int j = 0; j < createdRooms[i].size(); j++) {
+      bool block = createdRooms[i][j];
 
       if (!block)
         continue;
 
       bool sides[4]{};
 
-      if (j != 0 && createdRoomsMap[i][j - 1])
-        sides[0] = true;
-      if (j != gridSize - 1 && createdRoomsMap[i][j + 1])
-        sides[1] = true;
-      if (i != 0 && createdRoomsMap[i - 1][j])
-        sides[2] = true;
-      if (i != gridSize - 1 && createdRoomsMap[i + 1][j])
-        sides[3] = true;
+      if (j != 0 && createdRooms[i][j - 1])
+        sides[LEFT] = true;
+      if (j != gridSize - 1 && createdRooms[i][j + 1])
+        sides[RIGHT] = true;
+      if (i != 0 && createdRooms[i - 1][j])
+        sides[TOP] = true;
+      if (i != gridSize - 1 && createdRooms[i + 1][j])
+        sides[BOTTOM] = true;
 
       for (int k = 0; k < 4; k++)
         if (sides[k])
@@ -133,19 +131,19 @@ void Map::makeDoorInCertainRoom(int x, int y, int side) {
   int dx, dy;
 
   switch (side) {
-  case 0:
+  case LEFT:
     dx = startX;
     dy = endY - center;
     break;
-  case 1:
+  case RIGHT:
     dx = endX;
     dy = endY - center;
     break;
-  case 2:
+  case TOP:
     dx = endX - center;
     dy = startY;
     break;
-  case 3:
+  case BOTTOM:
     dx = endX - center;
     dy = endY;
     break;
@@ -162,35 +160,10 @@ void Map::setRoomCoordinates(int x, int y, int &startX, int &startY, int &endX,
   endY = startY + roomSide - 1;
 }
 
-void Map::renderMiniMap() {
-  for (int i = 0; i < createdRoomsMap.size(); i++) {
-    for (int j = 0; j < createdRoomsMap[i].size(); j++) {
-      if (!createdRoomsMap[i][j])
-        continue;
-
-      if (!miniMapBlocks[i][j]) {
-        int x = miniMapBlockSize * (j + 1) + miniMapX + miniMapPadding * j;
-        int y = miniMapBlockSize * (i + 1) + miniMapY + miniMapPadding * i;
-
-        glm::vec3 color;
-
-        if (getCurrentRoom() == i * getGridSize() + j)
-          color = {1.0f, 0.0f, 0.0f};
-
-        else
-          color = {0.0f, 0.0f, 0.0f};
-
-        miniMapBlocks[i][j] = new Rectangle(glm::vec2(x, y), miniMapBlockSize,
-                                            miniMapBlockSize, color);
-      }
-
-      miniMapBlocks[i][j]->render();
-    }
-  }
-}
-
 int Map::getCurrentRoom() { return currentRoom; }
 
 void Map::setCurrentRoom(int room) { currentRoom = room; }
 
 int Map::getGridSize() { return gridSize; }
+
+void Map::renderMinimap() { minimap.render(); }

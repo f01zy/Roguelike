@@ -1,11 +1,15 @@
 #include "Figure.h"
 #include "../Assets/Shader/Shader.h"
+#include "../Core/Window.h"
+#include "../Entities/EntityManager/EntityManager.h"
+#include "../Types/Types.h"
 #include <GL/glew.h>
-#include <vector>
+#include <cmath>
 
-Figure::Figure(glm::vec2 position, int width, int height, glm::vec3 color,
-               std::string path)
-    : position(position), width(width), height(height), color(color),
+Figure::Figure(glm::vec2 position, int renderType, int width, int height,
+               glm::vec3 color, std::string path)
+    : entityManager(EntityManager::getInstance()), position(position),
+      renderType(renderType), width(width), height(height), color(color),
       path(path) {
   float data[32]{
       position.x,
@@ -70,7 +74,53 @@ void Figure::use() {
   glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(transform));
 }
 
-void Figure::setPosition(glm::vec2 newPosition) { position = newPosition; }
+void Figure::setTexture() {
+  int useTexturePosition = glGetUniformLocation(Shader::program, "useTexture");
+
+  if (path.size() != 0)
+    glUniform1i(useTexturePosition, 1);
+
+  else
+    glUniform1i(useTexturePosition, 0);
+}
+
+void Figure::render() {
+  glBindVertexArray(VAO);
+
+  setTexture();
+  setRenderTypePosition();
+
+  glBindTexture(GL_TEXTURE_2D, texture);
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+  glBindVertexArray(0);
+}
+
+void Figure::setRenderTypePosition() {
+  if (renderType == STATIC) {
+    glm::vec2 playerPosition = entityManager.player.getPosition();
+
+    int x = playerPosition.x - std::floor(Window::width) / 2 + position.x;
+    int y = playerPosition.y - std::floor(Window::height) / 2 + position.y;
+
+    setPosition(glm::vec2(x, y));
+  }
+}
+
+void Figure::setPosition(glm::vec2 newPosition) {
+  vertices[0] = newPosition.x;
+  vertices[1] = newPosition.y;
+  vertices[8] = newPosition.x + width;
+  vertices[9] = newPosition.y;
+  vertices[16] = newPosition.x + width;
+  vertices[17] = newPosition.y + height;
+  vertices[24] = newPosition.x;
+  vertices[25] = newPosition.y + height;
+
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
 
 void Figure::setColor(std::vector<float> newColor) {
   for (int i = 0; i < verticesSize / verticeSize; i++) {
