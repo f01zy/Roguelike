@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-class EntityManager;
+class EntitiesManager;
 class Map;
 class Rectangle;
 class Entity;
@@ -21,7 +21,7 @@ private:
   int width, height;
 
   ObjectsManager &objectsManager;
-  EntityManager &entityManager;
+  EntitiesManager &entitiesManager;
   Map &map;
   Minimap minimap;
   Camera camera;

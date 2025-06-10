@@ -1,24 +1,26 @@
 #include "Collision.h"
-#include "../Entities/Entity.h"
-#include "../Figures/Figure.h"
 #include "../ObjectsManager/ObjectsManager.h"
+#include "../Types/Object.h"
 
-bool Collision::checkAllObjectsCollision(Entity &entity) {
+bool Collision::checkAllObjectsCollision(glm::vec2 position, int width,
+                                         int height) {
   ObjectsManager objectsManager = ObjectsManager::getInstance();
   glm::vec2 size = objectsManager.size();
 
   for (int i = 0; i < size.y; i++) {
     for (int j = 0; j < size.x; j++) {
-      Figure *object = objectsManager.get(j, i);
+      Object *object = objectsManager.get(j, i);
 
-      if (object) {
-        glm::vec2 objectPosition = object->getPosition();
+      if (!object)
+        continue;
 
-        if (checkCertainObjectCollision(entity.getPosition(), entity.width,
-                                        entity.height, objectPosition,
-                                        object->width, object->height))
-          return true;
-      }
+      glm::vec2 objectPosition = object->figure->getPosition();
+      int objectWidth = object->figure->width;
+      int objectHeight = object->figure->height;
+
+      if (checkCertainObjectCollision(position, width, height, objectPosition,
+                                      objectWidth, objectHeight))
+        return true;
     }
   }
 

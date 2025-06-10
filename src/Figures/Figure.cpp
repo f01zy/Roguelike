@@ -1,14 +1,14 @@
 #include "Figure.h"
 #include "../Assets/Shader/Shader.h"
 #include "../Core/Window.h"
-#include "../Entities/EntityManager/EntityManager.h"
-#include "../Types/Types.h"
+#include "../Entities/EntitiesManager/EntitiesManager.h"
+#include "../Types/Variables.h"
 #include <GL/glew.h>
 #include <cmath>
 
 Figure::Figure(glm::vec2 position, int renderType, int width, int height,
                glm::vec3 color, std::string path)
-    : entityManager(EntityManager::getInstance()), position(position),
+    : entitiesManager(EntitiesManager::getInstance()), position(position),
       renderType(renderType), width(width), height(height), color(color),
       path(path) {
   float data[32]{
@@ -98,7 +98,7 @@ void Figure::render() {
 
 void Figure::setRenderTypePosition() {
   if (renderType == STATIC) {
-    glm::vec2 playerPosition = entityManager.player.getPosition();
+    glm::vec2 playerPosition = entitiesManager.player.getPosition();
 
     int x = playerPosition.x - std::floor(Window::width) / 2 + position.x;
     int y = playerPosition.y - std::floor(Window::height) / 2 + position.y;
@@ -123,7 +123,7 @@ void Figure::setPosition(glm::vec2 newPosition) {
 }
 
 void Figure::setColor(std::vector<float> newColor) {
-  for (int i = 0; i < verticesSize / verticeSize; i++) {
+  for (int i = 0; i < verticesCount; i++) {
     vertices[i * verticeSize + 5] = newColor[0];
     vertices[i * verticeSize + 6] = newColor[1];
     vertices[i * verticeSize + 7] = newColor[2];

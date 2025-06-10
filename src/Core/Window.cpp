@@ -42,10 +42,6 @@ void Window::init() {
 }
 
 void Window::render() {
-  glm::mat4 projection = glm::ortho(0.0f, (float)width, (float)height, 0.0f);
-  glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE,
-                     glm::value_ptr(projection));
-
   Input input;
   Scene scene(width, height);
 

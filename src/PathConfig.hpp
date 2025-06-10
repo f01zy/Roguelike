@@ -3,5 +3,5 @@
 #include <string>
 
 namespace Paths {
-const std::string PROJECT = "/home/folzy/Documents/programming/projects/Roguelike";
+const std::string PROJECT = "/home/aminov/Documents/Programming/projects/Roguelike";
 }

@@ -7,7 +7,7 @@
 #include <glm/trigonometric.hpp>
 #include <string>
 
-class EntityManager;
+class EntitiesManager;
 
 class Figure {
 public:
@@ -32,11 +32,11 @@ protected:
   std::string path = "";
   int renderType;
 
-  EntityManager &entityManager;
+  EntitiesManager &entitiesManager;
 
   static const int verticeSize = 8;
-  static const int verticesSize = 8 * 4;
-  float vertices[verticesSize];
+  static const int verticesCount = 4;
+  float vertices[verticeSize * verticesCount];
 
   unsigned VAO, VBO, EBO;
   unsigned texture = 0;

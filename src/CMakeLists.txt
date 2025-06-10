@@ -13,7 +13,7 @@ set(
     ./Map/Minimap.cpp
     ./Entities/Entity.cpp
     ./Entities/Player/Player.cpp
-    ./Entities/EntityManager/EntityManager.cpp
+    ./Entities/EntitiesManager/EntitiesManager.cpp
     ./Utils/Utils.cpp
     ./Utils/Collision.cpp
     ./Utils/RoomsMovement.cpp

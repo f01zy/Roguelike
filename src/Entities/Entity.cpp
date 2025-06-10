@@ -1,6 +1,6 @@
 #include "Entity.h"
 #include "../Figures/Rectangle/Rectangle.h"
-#include "../Types/Types.h"
+#include "../Types/Variables.h"
 
 Entity::Entity(glm::vec2 position, int width, int height, float damage,
                float armor, float health, float speed)

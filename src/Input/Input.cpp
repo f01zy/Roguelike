@@ -1,10 +1,10 @@
 #include "Input.h"
-#include "../Entities/EntityManager/EntityManager.h"
+#include "../Entities/EntitiesManager/EntitiesManager.h"
 #include "../Utils/Collision.h"
 
 bool keys[GLFW_KEY_LAST];
 
-Input::Input() : entityManager(EntityManager::getInstance()) {}
+Input::Input() : entitiesManager(EntitiesManager::getInstance()) {}
 
 void Input::callback(GLFWwindow *window, int key, int scancode, int action,
                      int mode) {
@@ -21,10 +21,10 @@ void Input::callback(GLFWwindow *window, int key, int scancode, int action,
 void Input::handleMovement() {
   Collision collision;
 
-  glm::vec2 position = entityManager.player.getPosition();
-  float speed = entityManager.player.speed;
-  float width = entityManager.player.width;
-  float height = entityManager.player.height;
+  glm::vec2 position = entitiesManager.player.getPosition();
+  float speed = entitiesManager.player.speed;
+  float width = entitiesManager.player.width;
+  float height = entitiesManager.player.height;
 
   if (keys[GLFW_KEY_W])
     position.y -= speed;
@@ -38,7 +38,7 @@ void Input::handleMovement() {
   if (keys[GLFW_KEY_D])
     position.x += speed;
 
-  if (!collision.checkAllObjectsCollision(entityManager.player)) {
-    entityManager.player.setPosition(position);
+  if (!collision.checkAllObjectsCollision(position, width, height)) {
+    entitiesManager.player.setPosition(position);
   }
 }

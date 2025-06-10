@@ -1,25 +1,26 @@
 #include "RoomsMovement.h"
-#include "../Entities/EntityManager/EntityManager.h"
+#include "../Entities/EntitiesManager/EntitiesManager.h"
 #include "../Map/Map.h"
 #include <glm/glm.hpp>
 
 RoomsMovement::RoomsMovement()
-    : map(Map::getInstance()), entityManager(EntityManager::getInstance()) {}
+    : map(Map::getInstance()), entitiesManager(EntitiesManager::getInstance()) {
+}
 
 int RoomsMovement::getNewRoomSide() {
-  glm::vec2 position = entityManager.player.getPosition();
+  glm::vec2 position = entitiesManager.player.getPosition();
 
-  int width = entityManager.player.width;
-  int height = entityManager.player.height;
+  int width = entitiesManager.player.width;
+  int height = entitiesManager.player.height;
 
   int currentRoom = map.getCurrentRoom();
-  int x = currentRoom % map.getGridSize();
-  int y = currentRoom / map.getGridSize();
+  int x = currentRoom % map.grid;
+  int y = currentRoom / map.grid;
 
-  int xMax = map.blockSide * map.roomSide * (x + 1);
-  int yMax = map.blockSide * map.roomSide * (y + 1);
-  int xMin = map.blockSide * map.roomSide * x;
-  int yMin = map.blockSide * map.roomSide * y;
+  int xMax = map.blockSize * map.blocksInRoomSide * (x + 1);
+  int yMax = map.blockSize * map.blocksInRoomSide * (y + 1);
+  int xMin = map.blockSize * map.blocksInRoomSide * x;
+  int yMin = map.blockSize * map.blocksInRoomSide * y;
 
   bool leftRoom = position.x + width < xMin;
   bool rightRoom = position.x > xMax;
@@ -48,9 +49,9 @@ int RoomsMovement::getNewRoom(int side) {
   case 1:
     return currentRoom - 1;
   case 2:
-    return currentRoom + map.getGridSize();
+    return currentRoom + map.grid;
   case 3:
-    return currentRoom - map.getGridSize();
+    return currentRoom - map.grid;
   }
 
   return currentRoom;

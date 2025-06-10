@@ -1,9 +1,9 @@
 #pragma once
 
+#include "../Types/Object.h"
 #include <glm/glm.hpp>
 #include <vector>
 
-class Figure;
 class Map;
 
 class ObjectsManager final {
@@ -11,8 +11,8 @@ public:
   ObjectsManager();
   static ObjectsManager &getInstance();
 
-  Figure *get(int, int);
-  void add(int, int, Figure *);
+  Object *get(int, int);
+  void add(int, int, Object *);
   void remove(int, int);
   void clear();
   glm::vec2 size();
@@ -20,5 +20,5 @@ public:
   Map &map;
 
 private:
-  std::vector<std::vector<Figure *>> objects;
+  std::vector<std::vector<Object *>> objects;
 };

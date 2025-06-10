@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 
-class EntityManager;
+class EntitiesManager;
 
 class Input final {
 public:
@@ -12,5 +12,5 @@ public:
   static void callback(GLFWwindow *, int, int, int, int);
   void handleMovement();
 
-  EntityManager &entityManager;
+  EntitiesManager &entitiesManager;
 };

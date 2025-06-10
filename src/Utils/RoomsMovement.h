@@ -1,6 +1,6 @@
 #pragma once
 
-class EntityManager;
+class EntitiesManager;
 class Map;
 
 class RoomsMovement {
@@ -8,7 +8,7 @@ public:
   RoomsMovement();
   int check();
 
-  EntityManager &entityManager;
+  EntitiesManager &entitiesManager;
   Map &map;
 
 private:

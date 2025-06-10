@@ -2,11 +2,9 @@
 
 #include <glm/glm.hpp>
 
-class Entity;
-
 class Collision {
 public:
-  bool checkAllObjectsCollision(Entity &);
+  bool checkAllObjectsCollision(glm::vec2, int, int);
 
 private:
   bool checkCertainObjectCollision(glm::vec2, int, int, glm::vec2, int, int);

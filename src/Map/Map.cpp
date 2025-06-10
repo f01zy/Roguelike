@@ -1,5 +1,5 @@
 #include "Map.h"
-#include "../Types/Types.h"
+#include "../Types/Variables.h"
 #include "../Utils/Utils.h"
 #include "Minimap.h"
 #include <glm/glm.hpp>
@@ -15,12 +15,10 @@ void Map::generate() {
   Utils utils;
 
   rooms = utils.random(minRooms, maxRooms);
-  roomsToSquare = utils.roundToSquare(rooms);
-  gridSize = std::sqrt(roomsToSquare);
 
   initMaps();
 
-  int position = utils.random(0, roomsToSquare - 1);
+  int position = utils.random(0, squareRooms - 1);
   int createdBlocks = 1;
   currentRoom = 0;
 
@@ -29,10 +27,10 @@ void Map::generate() {
   while (createdBlocks < rooms) {
     int side = utils.random(0, 3);
 
-    if ((side == LEFT && position % gridSize == 0) ||
-        (side == RIGHT && (position + 1) % gridSize == 0) ||
-        (side == TOP && position < gridSize) ||
-        (side == BOTTOM && position >= gridSize * (gridSize - 1)))
+    if ((side == LEFT && position % grid == 0) ||
+        (side == RIGHT && (position + 1) % grid == 0) ||
+        (side == TOP && position < grid) ||
+        (side == BOTTOM && position >= grid * (grid - 1)))
       continue;
 
     switch (side) {
@@ -43,10 +41,10 @@ void Map::generate() {
       position++;
       break;
     case TOP:
-      position -= gridSize;
+      position -= grid;
       break;
     case BOTTOM:
-      position += gridSize;
+      position += grid;
       break;
     }
 
@@ -58,10 +56,10 @@ void Map::generate() {
 }
 
 bool Map::createRoom(int position) {
-  int x = position % gridSize;
-  int y = position / gridSize;
+  int x = position % grid;
+  int y = position / grid;
 
-  if (gridSize == 0 || createdRooms[y][x])
+  if (grid == 0 || createdRooms[y][x])
     return false;
 
   int startX, startY, endX, endY;
@@ -84,16 +82,16 @@ bool Map::createRoom(int position) {
 }
 
 void Map::initMaps() {
-  int x = roomSide * gridSize;
+  int x = blocksInRoomSide * grid;
 
   map.resize(x);
   for (auto &row : map) {
     row.resize(x, ' ');
   }
 
-  createdRooms.resize(gridSize);
+  createdRooms.resize(grid);
   for (auto &row : createdRooms) {
-    row.resize(gridSize, false);
+    row.resize(grid, false);
   }
 }
 
@@ -109,11 +107,11 @@ void Map::makeDoors() {
 
       if (j != 0 && createdRooms[i][j - 1])
         sides[LEFT] = true;
-      if (j != gridSize - 1 && createdRooms[i][j + 1])
+      if (j != grid - 1 && createdRooms[i][j + 1])
         sides[RIGHT] = true;
       if (i != 0 && createdRooms[i - 1][j])
         sides[TOP] = true;
-      if (i != gridSize - 1 && createdRooms[i + 1][j])
+      if (i != grid - 1 && createdRooms[i + 1][j])
         sides[BOTTOM] = true;
 
       for (int k = 0; k < 4; k++)
@@ -127,7 +125,7 @@ void Map::makeDoorInCertainRoom(int x, int y, int side) {
   int startX, startY, endX, endY;
   setRoomCoordinates(x, y, startX, startY, endX, endY);
 
-  int center = roomSide / 2;
+  int center = blocksInRoomSide / 2;
   int dx, dy;
 
   switch (side) {
@@ -154,14 +152,12 @@ void Map::makeDoorInCertainRoom(int x, int y, int side) {
 
 void Map::setRoomCoordinates(int x, int y, int &startX, int &startY, int &endX,
                              int &endY) {
-  startX = x * roomSide;
-  startY = y * roomSide;
-  endX = startX + roomSide - 1;
-  endY = startY + roomSide - 1;
+  startX = x * blocksInRoomSide;
+  startY = y * blocksInRoomSide;
+  endX = startX + blocksInRoomSide - 1;
+  endY = startY + blocksInRoomSide - 1;
 }
 
 int Map::getCurrentRoom() { return currentRoom; }
 
 void Map::setCurrentRoom(int room) { currentRoom = room; }
-
-int Map::getGridSize() { return gridSize; }

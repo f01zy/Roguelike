@@ -1,9 +1,8 @@
 #include "Minimap.h"
 #include "../Figures/Rectangle/Rectangle.h"
-#include "../Types/Types.h"
+#include "../Types/Variables.h"
 #include "Map.h"
 #include <glm/glm.hpp>
-#include <iostream>
 
 Minimap::Minimap()
     : roomMovement(RoomsMovement()), map(Map::getInstance()),
@@ -13,13 +12,17 @@ Minimap::Minimap()
 void Minimap::updateBlocks(int newRoom) {
   int currentRoom = map.getCurrentRoom();
 
-  int ax = newRoom % map.getGridSize();
-  int ay = newRoom / map.getGridSize();
-  minimapBlocks[ay][ax]->setColor(std::vector<float>{1.0f, 0.0f, 0.0f});
+  int x = newRoom % map.grid;
+  int y = newRoom / map.grid;
 
-  int bx = currentRoom % map.getGridSize();
-  int by = currentRoom / map.getGridSize();
-  minimapBlocks[by][bx]->setColor(std::vector<float>{0.0f, 0.0f, 0.0f});
+  // delete minimapBlocks[y][x];
+  minimapBlocks[y][x]->setColor(std::vector<float>{1.0f, 0.0f, 0.0f});
+
+  x = currentRoom % map.grid;
+  y = currentRoom / map.grid;
+
+  // delete minimapBlocks[y][x];
+  minimapBlocks[y][x]->setColor(std::vector<float>{0.0f, 0.0f, 0.0f});
 }
 
 void Minimap::render() {
@@ -29,11 +32,10 @@ void Minimap::render() {
   if (currentRoom != newRoom) {
     updateBlocks(newRoom);
     map.setCurrentRoom(newRoom);
-    std::cout << newRoom << std::endl;
   }
 
-  for (int i = 0; i < map.getGridSize(); i++) {
-    for (int j = 0; j < map.getGridSize(); j++) {
+  for (int i = 0; i < map.grid; i++) {
+    for (int j = 0; j < map.grid; j++) {
       if (!map.createdRooms[i][j])
         continue;
 
@@ -43,7 +45,7 @@ void Minimap::render() {
 
         glm::vec3 color;
 
-        if (map.getCurrentRoom() == i * map.getGridSize() + j)
+        if (map.getCurrentRoom() == i * map.grid + j)
           color = {1.0f, 0.0f, 0.0f};
 
         else

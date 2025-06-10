@@ -1,37 +1,39 @@
 #include "Scene.h"
+#include "../Entities/EntitiesManager/EntitiesManager.h"
 #include "../Entities/Entity.h"
-#include "../Entities/EntityManager/EntityManager.h"
 #include "../Figures/Rectangle/Rectangle.h"
 #include "../Map/Map.h"
 #include "../ObjectsManager/ObjectsManager.h"
 #include "../PathConfig.hpp"
-#include "../Types/Types.h"
+#include "../Types/Object.h"
+#include "../Types/Variables.h"
 #include <iostream>
 
 Scene::Scene(int width, int height)
     : width(width), height(height), minimap(Minimap()),
       objectsManager(ObjectsManager::getInstance()), map(Map::getInstance()),
-      entityManager(EntityManager::getInstance()),
-      camera(Camera(entityManager.player, width, height)) {}
+      entitiesManager(EntitiesManager::getInstance()),
+      camera(Camera(entitiesManager.player, width, height)) {}
 
 void Scene::init() {
   glm::vec2 size = objectsManager.size();
 
   for (int i = 0; i < size.y; i++) {
     for (int j = 0; j < size.x; j++) {
-      if (map.map[i][j] != ' ') {
-        int x = j * map.blockSide;
-        int y = i * map.blockSide;
+      if (map.map[i][j] == ' ')
+        continue;
 
-        objectsManager.add(
-            j, i,
-            new Rectangle(glm::vec2(x, y), DEFAULT, map.blockSide,
-                          map.blockSide, glm::vec3(0.0f, 0.0f, 0.0f),
-                          Paths::PROJECT + "/textures/wall.jpg"));
+      int x = j * map.blockSize;
+      int y = i * map.blockSize;
 
-        std::cout << "initialize object (" << i << ", " << j << ")"
-                  << std::endl;
-      }
+      Object *object = new Object();
+      object->figure = new Rectangle(glm::vec2(x, y), DEFAULT, map.blockSize,
+                                     map.blockSize, glm::vec3(0.0f, 0.0f, 0.0f),
+                                     Paths::PROJECT + "/textures/wall.jpg");
+
+      objectsManager.add(j, i, object);
+
+      std::cout << "initialize object (" << i << ", " << j << ")" << std::endl;
     }
   }
 }
@@ -41,16 +43,17 @@ void Scene::renderObjects() {
 
   for (int i = 0; i < size.y; i++) {
     for (int j = 0; j < size.x; j++) {
-      if (map.map[i][j] != ' ') {
-        objectsManager.get(j, i)->render();
-      }
+      Object *object = objectsManager.get(j, i);
+
+      if (object)
+        object->figure->render();
     }
   }
 }
 
 void Scene::render() {
   renderObjects();
-  entityManager.player.render();
+  entitiesManager.player.render();
   camera.update();
   minimap.render();
 }
